@@ -1,0 +1,18 @@
+# git
+.git
+.gitignore
+
+# npm modules
+/node_modules
+
+# environment vars
+.env
+
+# javascript
+/dist
+
+# docker files
+Dockerfile
+Dockerfile.dev
+Dockerfile.prod
+.dockerignore
