@@ -27,6 +27,7 @@ services:
       - "${PORT}:${PORT}"
     command: yarn dev:watch
     volumes:
+      - ./server/node_modules:/app/node_modules
       - ./server/src:/app/src
     depends_on:
       - postgres
@@ -42,6 +43,7 @@ services:
     command: yarn dev
     volumes:
       - ./client/.next:/app/.next
+      - ./client/node_modules:/app/node_modules
       - ./client/src:/app/src
     depends_on:
       - server
