@@ -5,12 +5,13 @@ import { Arg, Int, Mutation, Resolver } from "type-graphql";
 @Resolver(Note)
 export class NoteResolver {
   @Mutation(() => Note, { nullable: true })
-  async createNote(@Arg("lectureId", () => Number) lectureId: number,
+  async createNote(
+    @Arg("lectureId", () => Int) lectureId: number,
     @Arg("content", () => String) content: string,
-    @Arg("timestamp", () => Int) timestamp: number,
+    @Arg("timestamp", () => Int) timestamp: number
   ) {
     const lecture = await Lecture.findOne(lectureId);
-    
+
     console.log(lecture);
 
     if (!lecture) {
@@ -24,7 +25,7 @@ export class NoteResolver {
     const newNote = await Note.create({
       lectureId,
       content,
-      timestamp
+      timestamp,
     }).save();
 
     return newNote;
