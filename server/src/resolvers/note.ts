@@ -18,7 +18,7 @@ export class NoteResolver {
       return;
     }
 
-    if (content.length === 0 || !timestamp) {
+    if (content.length === 0 || timestamp < 0) {
       return;
     }
 
