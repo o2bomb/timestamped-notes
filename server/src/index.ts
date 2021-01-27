@@ -11,6 +11,10 @@ import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
 import { Todo } from "./entities/Todo";
 import { TodoResolver } from "./resolvers/todo";
+import { Lecture } from "./entities/Lecture";
+import { Note } from "./entities/Note";
+import { LectureResolver } from "./resolvers/lecture";
+import { NoteResolver } from "./resolvers/note";
 
 const main = async () => {
   await createConnection({
@@ -18,7 +22,7 @@ const main = async () => {
     url: `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.DATABASE_NAME}`,
     logging: true,
     synchronize: true, // makes sure entities are synced with database. dont use in prod
-    entities: [Todo],
+    entities: [Todo, Lecture, Note],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
   // await conn.runMigrations();
@@ -54,7 +58,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, TodoResolver],
+      resolvers: [HelloResolver, TodoResolver, LectureResolver, NoteResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
