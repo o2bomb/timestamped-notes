@@ -21,7 +21,6 @@ Installation prerequisites:
 ```env
 POSTGRES_PASSWORD=verysecretpassword
 DATABASE_NAME=lecture-notes
-DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/${DATABASE_NAME}
 REDIS_URL=redis:6379
 CORS_ORIGIN=http://localhost:3000
 PORT=5000
