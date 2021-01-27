@@ -1,7 +1,7 @@
 {
-  "name": "react-graphql-server",
+  "name": "timestamped-notes-server",
   "version": "1.0.0",
-  "description": "Server for react-graphql",
+  "description": "Server for timestamped-notes",
   "main": "dist/index.js",
   "author": "Felix Tan",
   "license": "MIT",

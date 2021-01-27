@@ -1,7 +1,7 @@
 {
-  "name": "react-graphql-client",
+  "name": "timestamped-notes-client",
   "version": "0.1.0",
-  "description": "Client for react-graphql",
+  "description": "Client for timestamped-notes",
   "author": "Felix Tan",
   "license": "MIT",
   "private": true,

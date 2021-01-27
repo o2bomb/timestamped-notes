@@ -1,5 +1,5 @@
-# React w/ GraphQL Server template
-This project contains boilerplate code for a TypeScript React app with a GraphQL API running on Express. The entire project is Dockerized for easy setup of a development environment.
+# timestamped-notes
+Web app for taking notes on videos with timestamps 
 
 ## Running the project
 Installation prerequisites:
