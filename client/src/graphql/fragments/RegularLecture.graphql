@@ -1,0 +1,9 @@
+fragment RegularLecture on Lecture {
+  id
+  videoUrl
+  notes {
+    ...RegularNote
+  }
+  createdAt
+  updatedAt
+}

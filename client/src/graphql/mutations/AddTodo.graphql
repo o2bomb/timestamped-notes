@@ -1,5 +1,0 @@
-mutation AddTodo($content: String!) {
-  addTodo(content: $content) {
-    ...RegularTodo
-  }
-}

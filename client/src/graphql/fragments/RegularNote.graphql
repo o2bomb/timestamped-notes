@@ -1,0 +1,7 @@
+fragment RegularNote on Note {
+  id
+  content
+  timestamp
+  createdAt
+  updatedAt
+}

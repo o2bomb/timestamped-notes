@@ -1,0 +1,5 @@
+query GetLecture($id: Int!) {
+    getLecture(id: $id) {
+        ...RegularLecture
+    }
+}

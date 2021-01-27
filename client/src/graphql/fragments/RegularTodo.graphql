@@ -1,6 +1,0 @@
-fragment RegularTodo on Todo {
-  id
-  content
-  createdAt
-  updatedAt
-}
