@@ -9,8 +9,6 @@ import { COOKIE_NAME, __prod__ } from "./constants";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
-import { Todo } from "./entities/Todo";
-import { TodoResolver } from "./resolvers/todo";
 import { Lecture } from "./entities/Lecture";
 import { Note } from "./entities/Note";
 import { LectureResolver } from "./resolvers/lecture";
@@ -22,7 +20,7 @@ const main = async () => {
     url: `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.DATABASE_NAME}`,
     logging: true,
     synchronize: true, // makes sure entities are synced with database. dont use in prod
-    entities: [Todo, Lecture, Note],
+    entities: [Lecture, Note],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
   // await conn.runMigrations();
@@ -58,7 +56,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, TodoResolver, LectureResolver, NoteResolver],
+      resolvers: [HelloResolver, LectureResolver, NoteResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
