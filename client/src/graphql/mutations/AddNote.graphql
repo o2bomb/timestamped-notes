@@ -1,0 +1,5 @@
+mutation AddNote($id: Int!, $content: String!, $timestamp: Int!) {
+  addNote(id: $id, content: $content, timestamp: $timestamp) {
+    ...RegularLecture
+  }
+}

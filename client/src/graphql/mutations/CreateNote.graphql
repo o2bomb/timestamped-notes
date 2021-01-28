@@ -1,5 +1,0 @@
-mutation CreateNote($lectureId: Int!, $content: String!, $timestamp: Int!) {
-  createNote(lectureId: $lectureId, content: $content, timestamp: $timestamp) {
-    ...RegularNote
-  }
-}

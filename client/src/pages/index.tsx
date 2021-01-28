@@ -1,8 +1,13 @@
+import { Reference } from "@apollo/client";
 import Head from "next/head";
 import { FormEvent, useState } from "react";
 import YouTube from "react-youtube";
 import {
-  useCreateNoteMutation,
+  GetLectureDocument,
+  Lecture,
+  RegularLectureFragmentDoc,
+  RegularNoteFragmentDoc,
+  useAddNoteMutation,
   useGetLectureQuery,
 } from "../generated/graphql";
 
@@ -17,7 +22,7 @@ export default function Home() {
       id: 1,
     },
   });
-  const [createNote] = useCreateNoteMutation();
+  const [addNote] = useAddNoteMutation();
 
   const setVideoTime = (timestamp: number) => {
     if (target === undefined || target === null) {
@@ -30,9 +35,9 @@ export default function Home() {
     e.preventDefault();
     const currentTimestamp = Math.round(target.getCurrentTime());
 
-    createNote({
+    addNote({
       variables: {
-        lectureId: 1,
+        id: 1,
         content: value,
         timestamp: currentTimestamp,
       },
@@ -51,7 +56,7 @@ export default function Home() {
           videoId="kd1u1ZdJz4w"
           onReady={(e) => {
             setTarget(e.target);
-            console.log(e.target);
+            // console.log(e.target);
           }}
         />
         <div className={styles.notes}>

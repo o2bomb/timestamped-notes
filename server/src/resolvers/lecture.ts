@@ -9,6 +9,7 @@ import {
   Resolver,
   Root,
 } from "type-graphql";
+import { isExistsQuery } from "../utils/isExistsQuery";
 
 @Resolver(Lecture)
 export class LectureResolver {
@@ -20,6 +21,40 @@ export class LectureResolver {
         lectureId,
       },
     });
+  }
+
+  @Mutation(() => Lecture, { nullable: true })
+  async addNote(
+    @Arg("id", () => Int) id: number,
+    @Arg("content", () => String) content: string,
+    @Arg("timestamp", () => Int) timestamp: number
+  ) {
+    const [{ exists }] = await Lecture.query(
+       isExistsQuery(
+        Lecture.createQueryBuilder()
+          .select('*')
+          .where(`id = ${id}`)
+          .getQuery()
+      )
+    );
+
+    if (!exists) {
+      return;
+    }
+
+    if (content.length === 0 || timestamp < 0) {
+      return;
+    }
+
+    await Note.create({
+      lectureId: id,
+      content,
+      timestamp,
+    }).save();
+
+    const udpatedLecture = await Lecture.findOne(id);
+
+    return udpatedLecture;
   }
 
   @Query(() => Lecture, { nullable: true })
