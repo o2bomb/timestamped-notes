@@ -1,16 +1,86 @@
-html,
-body {
-  padding: 0;
+:root {
+  --color-black: #000000;
+  --color-neutral-800: #1C1C1C;
+  --color-neutral-700: #3C3C3C;
+  --color-neutral-600: #525252;
+  --color-neutral-500: #767676;
+  --color-neutral-400: #9B9B9B;
+  --color-neutral-300: #C0C0C0;
+  --color-neutral-200: #DCDCDC;
+  --color-neutral-100: #F1F1F1;
+  --color-white: #F1F1F1;
+}
+
+/*
+Perform basic CSS reset so that every browser displays CSS
+in exactly the same way
+*/
+*,
+*::after,
+*::before {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+  /* box-sizing by default is not inherited, so force it to be inherited */
+  /* i.e. all child elements with the box-sizing property will now inherit from this */
+  box-sizing: inherit;
+
+  font-family: 'Cabin', sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+html {
+  /* This assigned root font size will allow the usage of the rem unit */
+  /* The rem unit is used to define children element padding/font sizes */
+  /* Default font size is 16px so set it to 10px (62.5% of 16px) for easy calculations */
+  /* (1 rem == 10px) */
+  font-size: 62.5%;
+
+  /* @media (max-width: 1630px) {
+    font-size: 56.25%;
+  } */
 }
 
-* {
+body {
   box-sizing: border-box;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: #0069ed;
+  color: var(--color-white);
+  font-family: sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, 
+              transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  background: #0053ba;
+}
+
+button:focus {
+  outline: 1px solid #fff;
+  outline-offset: -4px;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+/* 
+  Styling text inputs only
+*/
+input:not([type=submit]):not([type=file]) {
+  padding: 1rem 2rem;
+  border-radius: 0;
+  border: 2px solid var(--color-black);
+  background-color: var(--color-white);
 }
