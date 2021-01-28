@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import Layout from "../components/Layout";
 import {
@@ -12,13 +12,18 @@ import { secondsToTime } from "../utils/secondsToTime";
 export default function Home() {
   const [value, setValue] = useState("");
   const [target, setTarget] = useState<any>();
-
+  const scrollElement = useRef<HTMLDivElement>(null);
+  
   const { data, loading, error } = useGetLectureQuery({
     variables: {
       id: 1,
     },
   });
   const [addNote] = useAddNoteMutation();
+
+  useEffect(() => {
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+  }, [])
 
   const setVideoTime = (timestamp: number) => {
     if (target === undefined || target === null) {
@@ -27,17 +32,20 @@ export default function Home() {
     target.seekTo(timestamp);
   };
 
-  const handleSubmitNote = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitNote = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const currentTimestamp = Math.round(target.getCurrentTime());
 
-    addNote({
+    await addNote({
       variables: {
         id: 1,
         content: value,
         timestamp: currentTimestamp,
       },
     });
+
+    setValue("");
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -68,6 +76,7 @@ export default function Home() {
                 </div>
               );
             })}
+            <div ref={scrollElement}></div>
           </div>
           <form className={styles.form} onSubmit={handleSubmitNote}>
             <input
