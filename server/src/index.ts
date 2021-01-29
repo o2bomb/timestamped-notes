@@ -10,6 +10,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { Lecture } from "./entities/Lecture";
 import { Note } from "./entities/Note";
+import { User } from "./entities/User";
 import { NoteResolver } from "./resolvers/note";
 import { HelloResolver } from "./resolvers/hello";
 import { LectureResolver } from "./resolvers/lecture";
@@ -23,7 +24,7 @@ const main = async () => {
     url: `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.DATABASE_NAME}`,
     logging: true,
     synchronize: true, // makes sure entities are synced with database. dont use in prod
-    entities: [Lecture, Note],
+    entities: [Lecture, Note, User],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
   // await conn.runMigrations();
@@ -76,13 +77,7 @@ const main = async () => {
 
   // ROUTES
   app.get("/", (req: any, res) => {
-    console.log(req.user);
-
-    if (req.user) {
-      res.send(`Welcome back, ${req.user.displayName}`);
-    } else {
-      res.send(`Hello world!`);
-    }
+    res.send(req.user);
   });
 
   app.get("/auth/error", (req, res) => {
@@ -101,6 +96,9 @@ const main = async () => {
       res.redirect("/");
     }
   );
+
+  // Needed for accessing req.user within GraphQL resolvers
+  app.use("/graphql", passport.authenticate("github", { session: true }));
 
   // if (process.env.NODE_ENV === "production") {
   //   app.use("/", express.static(path.join(__dirname, "..", "client", "dist")));
