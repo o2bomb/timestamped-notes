@@ -7,7 +7,6 @@ export class HelloResolver {
   hello(
     @Ctx() { req }: MyContext
   ) {
-    console.log(req.user);
     if (req.isAuthenticated()) {
       return `Welcome back, ${req.user.displayName}`;
     }

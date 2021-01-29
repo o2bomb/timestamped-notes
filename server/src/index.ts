@@ -14,6 +14,7 @@ import { User } from "./entities/User";
 import { NoteResolver } from "./resolvers/note";
 import { HelloResolver } from "./resolvers/hello";
 import { LectureResolver } from "./resolvers/lecture";
+import { UserResolver } from "./resolvers/user";
 import { COOKIE_NAME, __prod__ } from "./constants";
 
 import "./passport";
@@ -60,7 +61,7 @@ const main = async () => {
   // GRAPHQL AND CORS
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, LectureResolver, NoteResolver],
+      resolvers: [HelloResolver, LectureResolver, NoteResolver, UserResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
@@ -80,7 +81,7 @@ const main = async () => {
     res.send(req.user);
   });
 
-  app.get("/auth/error", (req, res) => {
+  app.get("/auth/error", (_, res) => {
     res.send("Authentication error. Please try again");
   });
 
@@ -92,7 +93,7 @@ const main = async () => {
   app.get(
     "/auth/github/callback",
     passport.authenticate("github", { failureRedirect: "/auth/error" }),
-    (req, res) => {
+    (_, res) => {
       res.redirect("/");
     }
   );

@@ -4,9 +4,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Lecture } from "./Lecture";
 
 @ObjectType()
 @Entity()
@@ -15,12 +17,12 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
   
-  // @OneToMany(() => Lecture, lecture => lecture.creator)
-  // lectures: Lecture[];
+  @OneToMany(() => Lecture, lecture => lecture.creator)
+  lectures: Lecture[];
   
   @Field()
   @Column()
-  githubId: number;
+  githubId: string;
 
   @Field()
   @Column()
