@@ -12,7 +12,6 @@ import { Lecture } from "./entities/Lecture";
 import { Note } from "./entities/Note";
 import { User } from "./entities/User";
 import { NoteResolver } from "./resolvers/note";
-import { HelloResolver } from "./resolvers/hello";
 import { LectureResolver } from "./resolvers/lecture";
 import { UserResolver } from "./resolvers/user";
 import { COOKIE_NAME, __prod__ } from "./constants";
@@ -61,7 +60,7 @@ const main = async () => {
   // GRAPHQL AND CORS
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, LectureResolver, NoteResolver, UserResolver],
+      resolvers: [LectureResolver, NoteResolver, UserResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
