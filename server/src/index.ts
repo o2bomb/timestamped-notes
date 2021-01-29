@@ -3,16 +3,19 @@ import express from "express";
 import session from "express-session";
 import Redis from "ioredis";
 import path from "path";
-import { createConnection } from "typeorm";
 import connectRedis from "connect-redis";
-import { COOKIE_NAME, __prod__ } from "./constants";
+import passport from "passport";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./resolvers/hello";
 import { Lecture } from "./entities/Lecture";
 import { Note } from "./entities/Note";
-import { LectureResolver } from "./resolvers/lecture";
 import { NoteResolver } from "./resolvers/note";
+import { HelloResolver } from "./resolvers/hello";
+import { LectureResolver } from "./resolvers/lecture";
+import { COOKIE_NAME, __prod__ } from "./constants";
+
+import "./passport";
 
 const main = async () => {
   await createConnection({
@@ -27,12 +30,7 @@ const main = async () => {
 
   const app = express();
 
-  // CORS
-  const corsOptions = {
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  };
-
+  // SESSION AND COOKIES
   const RedisStore = connectRedis(session);
   const redis = new Redis(process.env.REDIS_URL);
   app.use(
@@ -54,6 +52,11 @@ const main = async () => {
     })
   );
 
+  // PASSPORT
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // GRAPHQL AND CORS
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [HelloResolver, LectureResolver, NoteResolver],
@@ -65,10 +68,39 @@ const main = async () => {
       redis,
     }),
   });
+  const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  };
   apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   // ROUTES
-  app.get("/hello", (_, res) => res.send("Hello World!"));
+  app.get("/", (req: any, res) => {
+    console.log(req.user);
+
+    if (req.user) {
+      res.send(`Welcome back, ${req.user.displayName}`);
+    } else {
+      res.send(`Hello world!`);
+    }
+  });
+
+  app.get("/auth/error", (req, res) => {
+    res.send("Authentication error. Please try again");
+  });
+
+  app.get(
+    "/auth/github",
+    passport.authenticate("github", { scope: ["user:email"] })
+  );
+
+  app.get(
+    "/auth/github/callback",
+    passport.authenticate("github", { failureRedirect: "/auth/error" }),
+    (req, res) => {
+      res.redirect("/");
+    }
+  );
 
   // if (process.env.NODE_ENV === "production") {
   //   app.use("/", express.static(path.join(__dirname, "..", "client", "dist")));
@@ -78,8 +110,8 @@ const main = async () => {
   app.listen(parseInt(process.env.PORT), () => {
     console.log("Express server started on port", process.env.PORT);
   });
-}
+};
 
 main().catch((error) => {
   console.error(error);
-})
+});
