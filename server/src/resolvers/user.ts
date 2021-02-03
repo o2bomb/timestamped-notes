@@ -6,7 +6,7 @@ import { MyContext } from "../types";
 @Resolver(User)
 export class UserResolver {
   @FieldResolver(() => [Lecture])
-  lecture(@Root() user: User) {
+  lectures(@Root() user: User) {
     const creatorId = user.id;
     return Lecture.find({
       where: {
