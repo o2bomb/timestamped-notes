@@ -2,12 +2,14 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { User } from "./entities/User";
 
-passport.serializeUser((user, done) => {
-  done(null, user);
+passport.serializeUser((user: any, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  done(null, id as any);
+passport.deserializeUser((id: any, done) => {
+  done(null, {
+    id
+  });
 });
 
 passport.use(
@@ -43,6 +45,7 @@ passport.use(
         }).save();
       }
 
+      // user object is passed to serializeUser()
       return done(null, user);
     }
   )
