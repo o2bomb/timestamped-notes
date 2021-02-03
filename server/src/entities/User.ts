@@ -4,20 +4,33 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Lecture } from "./Lecture";
 
 @ObjectType()
 @Entity()
-export class Todo extends BaseEntity {
+export class User extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
+  
+  @OneToMany(() => Lecture, lecture => lecture.creator)
+  lectures: Lecture[];
+  
+  @Field()
+  @Column()
+  githubId: string;
 
   @Field()
   @Column()
-  content!: string;
+  displayName!: string;
+
+  @Field()
+  @Column()
+  avatarUrl: string;
 
   @Field(() => String)
   @CreateDateColumn()

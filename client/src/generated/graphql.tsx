@@ -55,8 +55,8 @@ export type Note = {
 export type Mutation = {
   __typename?: 'Mutation';
   addTodo?: Maybe<Todo>;
+  addNote?: Maybe<Lecture>;
   createLecture?: Maybe<Lecture>;
-  createNote?: Maybe<Note>;
 };
 
 
@@ -65,15 +65,15 @@ export type MutationAddTodoArgs = {
 };
 
 
-export type MutationCreateLectureArgs = {
-  videoUrl: Scalars['String'];
+export type MutationAddNoteArgs = {
+  timestamp: Scalars['Int'];
+  content: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
-export type MutationCreateNoteArgs = {
-  timestamp: Scalars['Int'];
-  content: Scalars['String'];
-  lectureId: Scalars['Int'];
+export type MutationCreateLectureArgs = {
+  videoUrl: Scalars['String'];
 };
 
 export type RegularLectureFragment = (
@@ -103,18 +103,18 @@ export type CreateLectureMutation = (
   )> }
 );
 
-export type CreateNoteMutationVariables = Exact<{
-  lectureId: Scalars['Int'];
+export type AddNoteMutationVariables = Exact<{
+  id: Scalars['Int'];
   content: Scalars['String'];
   timestamp: Scalars['Int'];
 }>;
 
 
-export type CreateNoteMutation = (
+export type AddNoteMutation = (
   { __typename?: 'Mutation' }
-  & { createNote?: Maybe<(
-    { __typename?: 'Note' }
-    & RegularNoteFragment
+  & { addNote?: Maybe<(
+    { __typename?: 'Lecture' }
+    & RegularLectureFragment
   )> }
 );
 
@@ -194,40 +194,40 @@ export function useCreateLectureMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateLectureMutationHookResult = ReturnType<typeof useCreateLectureMutation>;
 export type CreateLectureMutationResult = Apollo.MutationResult<CreateLectureMutation>;
 export type CreateLectureMutationOptions = Apollo.BaseMutationOptions<CreateLectureMutation, CreateLectureMutationVariables>;
-export const CreateNoteDocument = gql`
-    mutation CreateNote($lectureId: Int!, $content: String!, $timestamp: Int!) {
-  createNote(lectureId: $lectureId, content: $content, timestamp: $timestamp) {
-    ...RegularNote
+export const AddNoteDocument = gql`
+    mutation AddNote($id: Int!, $content: String!, $timestamp: Int!) {
+  addNote(id: $id, content: $content, timestamp: $timestamp) {
+    ...RegularLecture
   }
 }
-    ${RegularNoteFragmentDoc}`;
-export type CreateNoteMutationFn = Apollo.MutationFunction<CreateNoteMutation, CreateNoteMutationVariables>;
+    ${RegularLectureFragmentDoc}`;
+export type AddNoteMutationFn = Apollo.MutationFunction<AddNoteMutation, AddNoteMutationVariables>;
 
 /**
- * __useCreateNoteMutation__
+ * __useAddNoteMutation__
  *
- * To run a mutation, you first call `useCreateNoteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateNoteMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNoteMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createNoteMutation, { data, loading, error }] = useCreateNoteMutation({
+ * const [addNoteMutation, { data, loading, error }] = useAddNoteMutation({
  *   variables: {
- *      lectureId: // value for 'lectureId'
+ *      id: // value for 'id'
  *      content: // value for 'content'
  *      timestamp: // value for 'timestamp'
  *   },
  * });
  */
-export function useCreateNoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateNoteMutation, CreateNoteMutationVariables>) {
-        return Apollo.useMutation<CreateNoteMutation, CreateNoteMutationVariables>(CreateNoteDocument, baseOptions);
+export function useAddNoteMutation(baseOptions?: Apollo.MutationHookOptions<AddNoteMutation, AddNoteMutationVariables>) {
+        return Apollo.useMutation<AddNoteMutation, AddNoteMutationVariables>(AddNoteDocument, baseOptions);
       }
-export type CreateNoteMutationHookResult = ReturnType<typeof useCreateNoteMutation>;
-export type CreateNoteMutationResult = Apollo.MutationResult<CreateNoteMutation>;
-export type CreateNoteMutationOptions = Apollo.BaseMutationOptions<CreateNoteMutation, CreateNoteMutationVariables>;
+export type AddNoteMutationHookResult = ReturnType<typeof useAddNoteMutation>;
+export type AddNoteMutationResult = Apollo.MutationResult<AddNoteMutation>;
+export type AddNoteMutationOptions = Apollo.BaseMutationOptions<AddNoteMutation, AddNoteMutationVariables>;
 export const GetLectureDocument = gql`
     query GetLecture($id: Int!) {
   getLecture(id: $id) {

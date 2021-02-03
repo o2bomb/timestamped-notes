@@ -1,23 +1,29 @@
-import Head from "next/head";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
+import Layout from "../components/Layout";
 import {
-  useCreateNoteMutation,
+  useAddNoteMutation,
   useGetLectureQuery,
 } from "../generated/graphql";
 
 import styles from "../styles/Home.module.css";
+import { secondsToTime } from "../utils/secondsToTime";
 
 export default function Home() {
   const [value, setValue] = useState("");
   const [target, setTarget] = useState<any>();
-
+  const scrollElement = useRef<HTMLDivElement>(null);
+  
   const { data, loading, error } = useGetLectureQuery({
     variables: {
       id: 1,
     },
   });
-  const [createNote] = useCreateNoteMutation();
+  const [addNote] = useAddNoteMutation();
+
+  useEffect(() => {
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+  }, [])
 
   const setVideoTime = (timestamp: number) => {
     if (target === undefined || target === null) {
@@ -26,52 +32,53 @@ export default function Home() {
     target.seekTo(timestamp);
   };
 
-  const handleSubmitNote = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitNote = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const currentTimestamp = Math.round(target.getCurrentTime());
 
-    createNote({
+    await addNote({
       variables: {
-        lectureId: 1,
+        id: 1,
         content: value,
         timestamp: currentTimestamp,
       },
     });
+
+    setValue("");
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>timestamped-notes</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
+    <Layout>
+      <div className={styles.container}>
         <YouTube
+          containerClassName={styles.video}
           videoId="kd1u1ZdJz4w"
           onReady={(e) => {
             setTarget(e.target);
-            console.log(e.target);
+            // console.log(e.target);
           }}
         />
-        <div className={styles.notes}>
-          <div>
+        <div className={styles.notesSection}>
+          <div className={styles.list}>
             {data?.getLecture?.notes.map((note, index) => {
               return (
-                <div key={index}>
+                <div key={index} className={styles.note}>
                   <button
+                    className={styles.timestamp}
                     onClick={() => {
                       setVideoTime(note.timestamp);
                     }}
                   >
-                    {note.timestamp}
+                    {secondsToTime(note.timestamp)}
                   </button>
-                  {note.content}
+                  <div className={styles.content}>{note.content}</div>
                 </div>
               );
             })}
+            <div ref={scrollElement}></div>
           </div>
-          <form onSubmit={handleSubmitNote}>
+          <form className={styles.form} onSubmit={handleSubmitNote}>
             <input
               value={value}
               onChange={(e) => {
@@ -83,7 +90,7 @@ export default function Home() {
             <button type="submit">Create note</button>
           </form>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }

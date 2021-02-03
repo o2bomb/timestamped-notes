@@ -3,18 +3,20 @@ import express from "express";
 import session from "express-session";
 import Redis from "ioredis";
 import path from "path";
-import { createConnection } from "typeorm";
 import connectRedis from "connect-redis";
-import { COOKIE_NAME, __prod__ } from "./constants";
+import passport from "passport";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./resolvers/hello";
-import { Todo } from "./entities/Todo";
-import { TodoResolver } from "./resolvers/todo";
 import { Lecture } from "./entities/Lecture";
 import { Note } from "./entities/Note";
-import { LectureResolver } from "./resolvers/lecture";
+import { User } from "./entities/User";
 import { NoteResolver } from "./resolvers/note";
+import { LectureResolver } from "./resolvers/lecture";
+import { UserResolver } from "./resolvers/user";
+import { COOKIE_NAME, __prod__ } from "./constants";
+
+import "./passport";
 
 const main = async () => {
   await createConnection({
@@ -22,19 +24,14 @@ const main = async () => {
     url: `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.DATABASE_NAME}`,
     logging: true,
     synchronize: true, // makes sure entities are synced with database. dont use in prod
-    entities: [Todo, Lecture, Note],
+    entities: [Lecture, Note, User],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
   // await conn.runMigrations();
 
   const app = express();
 
-  // CORS
-  const corsOptions = {
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  };
-
+  // SESSION AND COOKIES
   const RedisStore = connectRedis(session);
   const redis = new Redis(process.env.REDIS_URL);
   app.use(
@@ -56,9 +53,14 @@ const main = async () => {
     })
   );
 
+  // PASSPORT
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // GRAPHQL AND CORS
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, TodoResolver, LectureResolver, NoteResolver],
+      resolvers: [LectureResolver, NoteResolver, UserResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
@@ -67,10 +69,36 @@ const main = async () => {
       redis,
     }),
   });
+  const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  };
   apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   // ROUTES
-  app.get("/hello", (_, res) => res.send("Hello World!"));
+  app.get("/", (req: any, res) => {
+    res.send(req.user);
+  });
+
+  app.get("/auth/error", (_, res) => {
+    res.send("Authentication error. Please try again");
+  });
+
+  app.get(
+    "/auth/github",
+    passport.authenticate("github", { scope: ["user:email"] })
+  );
+
+  app.get(
+    "/auth/github/callback",
+    passport.authenticate("github", { failureRedirect: "/auth/error" }),
+    (_, res) => {
+      res.redirect("/");
+    }
+  );
+
+  // Needed for accessing req.user within GraphQL resolvers
+  app.use("/graphql", passport.authenticate("github", { session: true }));
 
   // if (process.env.NODE_ENV === "production") {
   //   app.use("/", express.static(path.join(__dirname, "..", "client", "dist")));
@@ -80,8 +108,8 @@ const main = async () => {
   app.listen(parseInt(process.env.PORT), () => {
     console.log("Express server started on port", process.env.PORT);
   });
-}
+};
 
 main().catch((error) => {
   console.error(error);
-})
+});

@@ -4,11 +4,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Note } from "./Note";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
@@ -16,14 +18,22 @@ export class Lecture extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
-  
+
+  @Field()
+  @Column()
+  creatorId: number;
+
+  @Field()
+  @ManyToOne(() => User, (user) => user.lectures)
+  creator: User;
+
   @OneToMany(() => Note, (note) => note.lecture)
   notes: Note[];
 
   @Field()
   @Column()
   videoUrl!: string;
-  
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
