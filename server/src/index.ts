@@ -42,7 +42,7 @@ const main = async () => {
         disableTouch: true,
       }) as session.Store,
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // lasts 10 years
+        maxAge: 1000 * 60 * 60 * 24 * 30, // lasts 30 days
         httpOnly: true,
         sameSite: "lax",
         secure: __prod__, // cookie only works in https (in prod)
@@ -93,7 +93,7 @@ const main = async () => {
     "/auth/github/callback",
     passport.authenticate("github", { failureRedirect: "/auth/error" }),
     (_, res) => {
-      res.redirect("/");
+      res.redirect("http://localhost:3000");
     }
   );
 
