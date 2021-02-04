@@ -1,9 +1,7 @@
-import axios from "axios";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
-import Layout from "../components/Layout";
-import { useAddNoteMutation, useGetLectureQuery, useMeLazyQuery, useMeQuery } from "../generated/graphql";
-
+import Layout from "../components/Layout/Layout";
+import { useAddNoteMutation, useGetLectureQuery } from "../generated/graphql";
 import styles from "../styles/Home.module.css";
 import { secondsToTime } from "../utils/secondsToTime";
 

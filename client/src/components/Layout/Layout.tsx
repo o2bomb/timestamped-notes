@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Navbar from "../Navbar";
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -13,6 +14,7 @@ const Layout: React.FC = ({ children }) => {
           rel="stylesheet"
         />
       </Head>
+      <Navbar />
       <main>{children}</main>
     </>
   );
