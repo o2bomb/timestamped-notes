@@ -13,9 +13,9 @@ function createApolloClient() {
     ssrMode: typeof window === "undefined", // set to true for SSR
     link: new HttpLink({
       uri: process.env.NEXT_PUBLIC_GRAPHQL_SERVER_URL,
+      credentials: "include"
     }),
     cache: new InMemoryCache(),
-    credentials: "include",
   });
 }
 
