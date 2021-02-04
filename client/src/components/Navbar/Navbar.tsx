@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     <header className={styles.navbar}>
       <div className={styles.brand}>
         {
-          data?.me ? `Welcome back, ${data.me.displayName}` : "brand name"
+          data?.me ? `Welcome back, ${data.me.displayName}` : "timestamped_notes"
         }
       </div>
       <div className={styles.buttonGroup}>

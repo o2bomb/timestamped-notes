@@ -1,10 +1,13 @@
 .navbar {
   display: flex;
   padding: 2rem 1rem;
+  align-items: center;
 }
 
 .brand {
-
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 3rem;
 }
 
 .buttonGroup {
