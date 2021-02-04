@@ -1,0 +1,11 @@
+fragment RegularUser on User {
+  id
+  githubId
+  displayName
+  avatarUrl
+  lectures {
+    id
+  }
+  createdAt
+  updatedAt
+}

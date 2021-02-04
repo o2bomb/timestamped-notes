@@ -15,10 +15,9 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
-  todos: Array<Todo>;
   getLecture?: Maybe<Lecture>;
   lectures: Array<Lecture>;
+  me?: Maybe<User>;
 };
 
 
@@ -26,21 +25,26 @@ export type QueryGetLectureArgs = {
   id: Scalars['Int'];
 };
 
-export type Todo = {
-  __typename?: 'Todo';
-  id: Scalars['Float'];
-  content: Scalars['String'];
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
-};
-
 export type Lecture = {
   __typename?: 'Lecture';
   id: Scalars['Float'];
+  creatorId: Scalars['Float'];
+  creator: User;
   videoUrl: Scalars['String'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   notes: Array<Note>;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Float'];
+  githubId: Scalars['String'];
+  displayName: Scalars['String'];
+  avatarUrl: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  lectures: Array<Lecture>;
 };
 
 export type Note = {
@@ -54,14 +58,8 @@ export type Note = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addTodo?: Maybe<Todo>;
   addNote?: Maybe<Lecture>;
   createLecture?: Maybe<Lecture>;
-};
-
-
-export type MutationAddTodoArgs = {
-  content: Scalars['String'];
 };
 
 
@@ -90,16 +88,12 @@ export type RegularNoteFragment = (
   & Pick<Note, 'id' | 'content' | 'timestamp' | 'createdAt' | 'updatedAt'>
 );
 
-export type CreateLectureMutationVariables = Exact<{
-  videoUrl: Scalars['String'];
-}>;
-
-
-export type CreateLectureMutation = (
-  { __typename?: 'Mutation' }
-  & { createLecture?: Maybe<(
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'githubId' | 'displayName' | 'avatarUrl' | 'createdAt' | 'updatedAt'>
+  & { lectures: Array<(
     { __typename?: 'Lecture' }
-    & RegularLectureFragment
+    & Pick<Lecture, 'id'>
   )> }
 );
 
@@ -113,6 +107,19 @@ export type AddNoteMutationVariables = Exact<{
 export type AddNoteMutation = (
   { __typename?: 'Mutation' }
   & { addNote?: Maybe<(
+    { __typename?: 'Lecture' }
+    & RegularLectureFragment
+  )> }
+);
+
+export type CreateLectureMutationVariables = Exact<{
+  videoUrl: Scalars['String'];
+}>;
+
+
+export type CreateLectureMutation = (
+  { __typename?: 'Mutation' }
+  & { createLecture?: Maybe<(
     { __typename?: 'Lecture' }
     & RegularLectureFragment
   )> }
@@ -142,6 +149,17 @@ export type GetLecturesQuery = (
   )> }
 );
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
+
 export const RegularNoteFragmentDoc = gql`
     fragment RegularNote on Note {
   id
@@ -162,38 +180,19 @@ export const RegularLectureFragmentDoc = gql`
   updatedAt
 }
     ${RegularNoteFragmentDoc}`;
-export const CreateLectureDocument = gql`
-    mutation CreateLecture($videoUrl: String!) {
-  createLecture(videoUrl: $videoUrl) {
-    ...RegularLecture
+export const RegularUserFragmentDoc = gql`
+    fragment RegularUser on User {
+  id
+  githubId
+  displayName
+  avatarUrl
+  lectures {
+    id
   }
+  createdAt
+  updatedAt
 }
-    ${RegularLectureFragmentDoc}`;
-export type CreateLectureMutationFn = Apollo.MutationFunction<CreateLectureMutation, CreateLectureMutationVariables>;
-
-/**
- * __useCreateLectureMutation__
- *
- * To run a mutation, you first call `useCreateLectureMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateLectureMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createLectureMutation, { data, loading, error }] = useCreateLectureMutation({
- *   variables: {
- *      videoUrl: // value for 'videoUrl'
- *   },
- * });
- */
-export function useCreateLectureMutation(baseOptions?: Apollo.MutationHookOptions<CreateLectureMutation, CreateLectureMutationVariables>) {
-        return Apollo.useMutation<CreateLectureMutation, CreateLectureMutationVariables>(CreateLectureDocument, baseOptions);
-      }
-export type CreateLectureMutationHookResult = ReturnType<typeof useCreateLectureMutation>;
-export type CreateLectureMutationResult = Apollo.MutationResult<CreateLectureMutation>;
-export type CreateLectureMutationOptions = Apollo.BaseMutationOptions<CreateLectureMutation, CreateLectureMutationVariables>;
+    `;
 export const AddNoteDocument = gql`
     mutation AddNote($id: Int!, $content: String!, $timestamp: Int!) {
   addNote(id: $id, content: $content, timestamp: $timestamp) {
@@ -228,6 +227,38 @@ export function useAddNoteMutation(baseOptions?: Apollo.MutationHookOptions<AddN
 export type AddNoteMutationHookResult = ReturnType<typeof useAddNoteMutation>;
 export type AddNoteMutationResult = Apollo.MutationResult<AddNoteMutation>;
 export type AddNoteMutationOptions = Apollo.BaseMutationOptions<AddNoteMutation, AddNoteMutationVariables>;
+export const CreateLectureDocument = gql`
+    mutation CreateLecture($videoUrl: String!) {
+  createLecture(videoUrl: $videoUrl) {
+    ...RegularLecture
+  }
+}
+    ${RegularLectureFragmentDoc}`;
+export type CreateLectureMutationFn = Apollo.MutationFunction<CreateLectureMutation, CreateLectureMutationVariables>;
+
+/**
+ * __useCreateLectureMutation__
+ *
+ * To run a mutation, you first call `useCreateLectureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLectureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLectureMutation, { data, loading, error }] = useCreateLectureMutation({
+ *   variables: {
+ *      videoUrl: // value for 'videoUrl'
+ *   },
+ * });
+ */
+export function useCreateLectureMutation(baseOptions?: Apollo.MutationHookOptions<CreateLectureMutation, CreateLectureMutationVariables>) {
+        return Apollo.useMutation<CreateLectureMutation, CreateLectureMutationVariables>(CreateLectureDocument, baseOptions);
+      }
+export type CreateLectureMutationHookResult = ReturnType<typeof useCreateLectureMutation>;
+export type CreateLectureMutationResult = Apollo.MutationResult<CreateLectureMutation>;
+export type CreateLectureMutationOptions = Apollo.BaseMutationOptions<CreateLectureMutation, CreateLectureMutationVariables>;
 export const GetLectureDocument = gql`
     query GetLecture($id: Int!) {
   getLecture(id: $id) {
@@ -293,3 +324,35 @@ export function useGetLecturesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetLecturesQueryHookResult = ReturnType<typeof useGetLecturesQuery>;
 export type GetLecturesLazyQueryHookResult = ReturnType<typeof useGetLecturesLazyQuery>;
 export type GetLecturesQueryResult = Apollo.QueryResult<GetLecturesQuery, GetLecturesQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    ...RegularUser
+  }
+}
+    ${RegularUserFragmentDoc}`;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
