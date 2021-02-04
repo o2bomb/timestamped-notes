@@ -1,10 +1,8 @@
+import axios from "axios";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import Layout from "../components/Layout";
-import {
-  useAddNoteMutation,
-  useGetLectureQuery,
-} from "../generated/graphql";
+import { useAddNoteMutation, useGetLectureQuery } from "../generated/graphql";
 
 import styles from "../styles/Home.module.css";
 import { secondsToTime } from "../utils/secondsToTime";
@@ -13,7 +11,7 @@ export default function Home() {
   const [value, setValue] = useState("");
   const [target, setTarget] = useState<any>();
   const scrollElement = useRef<HTMLDivElement>(null);
-  
+
   const { data, loading, error } = useGetLectureQuery({
     variables: {
       id: 1,
@@ -23,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
-  }, [])
+  }, []);
 
   const setVideoTime = (timestamp: number) => {
     if (target === undefined || target === null) {
@@ -91,6 +89,21 @@ export default function Home() {
           </form>
         </div>
       </div>
+      <button
+        onClick={async () => {
+          let data;
+          try {
+            data = await axios.get("http://localhost:5000", {
+              withCredentials: true,
+            });
+            console.log(data);
+          } catch (e) {
+            console.debug(e);
+          }
+        }}
+      >
+        Click me
+      </button>
     </Layout>
   );
 }
