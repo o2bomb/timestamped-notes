@@ -36,21 +36,18 @@ export class LectureResolver {
   }
 
   @Mutation(() => Lecture, { nullable: true })
+  @UseMiddleware(isAuthenticated)
   async addNote(
     @Arg("id", () => Int) id: number,
     @Arg("content", () => String) content: string,
     @Arg("timestamp", () => Int) timestamp: number,
     @Ctx() { req }: MyContext
   ) {
-    if (!req.isAuthenticated()) {
-      return;
-    }
-
     const [{ exists }] = await Lecture.query(
       isExistsQuery(
         Lecture.createQueryBuilder()
           .select('*')
-          .where(`id = ${id} AND "creatorId" = ${req.user.id}`)
+          .where(`id = ${id} AND "creatorId" = ${req.user!.id}`)
           .getQuery()
       )
     );
@@ -75,10 +72,17 @@ export class LectureResolver {
   }
 
   @Query(() => Lecture, { nullable: true })
+  @UseMiddleware(isAuthenticated)
   getLecture(
-    @Arg("id", () => Int) id: number
+    @Arg("id", () => Int) id: number,
+    @Ctx() { req }: MyContext
   ) {
-    return Lecture.findOne(id);
+    return Lecture.findOne({
+      where: {
+        creatorId: req.user!.id,
+        id
+      }
+    });
   }
 
   @Query(() => [Lecture])
