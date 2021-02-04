@@ -1,12 +1,10 @@
-import React from 'react'
+import React from "react";
 import Link from "next/link";
-import { useMeQuery } from '../../generated/graphql';
+import { useMeQuery } from "../../generated/graphql";
 
 import styles from "./Navbar.module.css";
 
-interface NavbarProps {
-
-}
+interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
   const { data, loading, error } = useMeQuery();
@@ -14,29 +12,23 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   return (
     <header className={styles.navbar}>
       <div className={styles.brand}>
-        {
-          data?.me ? `Welcome back, ${data.me.displayName}` : "timestamped_notes"
-        }
+        {data?.me
+          ? `Welcome back, ${data.me.displayName}`
+          : (
+            <Link href="/">
+              timestamped_notes
+            </Link>
+          )}
       </div>
       <div className={styles.buttonGroup}>
-        {
-          data?.me ? (
-            <Link
-              href="/logout"
-            >
-              Logout
-            </Link>
-          ) : (
-                <Link
-              href="/auth/github"
-            >
-              Sign in with GitHub
-            </Link>
-          )
-        }
+        {data?.me ? (
+          <Link href="/logout">Logout</Link>
+        ) : (
+          <Link href="/auth/github">Sign in with GitHub</Link>
+        )}
       </div>
     </header>
   );
-}
+};
 
 export default Navbar;

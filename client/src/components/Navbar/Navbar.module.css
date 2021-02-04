@@ -4,12 +4,16 @@
   align-items: center;
 }
 
-.brand {
-  font-family: 'Space Mono', monospace;
+.brand > * {
+  font-family: "Space Mono", monospace;
   font-weight: 700;
   font-size: 3rem;
 }
 
 .buttonGroup {
   margin-left: auto;
+}
+
+.buttonGroup > * {
+  font-family: "Space Mono", monospace;
 }
