@@ -3,6 +3,7 @@ import express from "express";
 import session from "express-session";
 import Redis from "ioredis";
 import path from "path";
+import cors from "cors";
 import connectRedis from "connect-redis";
 import passport from "passport";
 import { createConnection } from "typeorm";
@@ -73,7 +74,8 @@ const main = async () => {
     origin: process.env.CORS_ORIGIN,
     credentials: true,
   };
-  apolloServer.applyMiddleware({ app, cors: corsOptions });
+  app.use(cors(corsOptions));
+  apolloServer.applyMiddleware({ app, cors: false });
 
   // ROUTES
   app.get("/", (req: any, res) => {
