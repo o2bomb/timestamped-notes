@@ -9,10 +9,12 @@ import {
   Query,
   Resolver,
   Root,
+  UseMiddleware,
 } from "type-graphql";
 import { isExistsQuery } from "../utils/isExistsQuery";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 @Resolver(Lecture)
 export class LectureResolver {
@@ -85,20 +87,16 @@ export class LectureResolver {
   }
 
   @Mutation(() => Lecture, { nullable: true })
+  @UseMiddleware(isAuthenticated)
   createLecture(@Arg("videoUrl", () => String) videoUrl: string,
     @Ctx() { req }: MyContext
   ) {
-    if (!req.isAuthenticated()) {
-      console.log("Error: User is not authenticated");
-      return;
-    }
-    
     if (!videoUrl) {
       return;
     }
 
     return Lecture.create({
-      creatorId: req.user.id,
+      creatorId: req.user!.id,
       videoUrl,
     }).save();
   }
