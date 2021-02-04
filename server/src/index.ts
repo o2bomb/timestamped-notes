@@ -82,6 +82,12 @@ const main = async () => {
     res.send(req.user);
   });
 
+  app.get("/logout", (req, res) => {
+    req.session.destroy(function (err) {
+      res.redirect("/");
+    });
+  });
+
   app.get("/auth/error", (_, res) => {
     res.send("Authentication error. Please try again");
   });

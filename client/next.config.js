@@ -5,6 +5,10 @@ module.exports = {
         source: '/auth/github',
         destination: 'http://server:5000/auth/github',
       },
+      {
+        source: '/logout',
+        destination: 'http://server:5000/logout',        
+      }
     ] : []
   },
 }
