@@ -84,3 +84,8 @@ input:not([type=submit]):not([type=file]) {
   border: 2px solid var(--color-black);
   background-color: var(--color-white);
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+}
