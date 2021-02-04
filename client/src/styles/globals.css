@@ -1,14 +1,21 @@
 :root {
+  /*
+    NEUTRALS
+  */
   --color-black: #000000;
-  --color-neutral-800: #1C1C1C;
-  --color-neutral-700: #3C3C3C;
+  --color-neutral-800: #1c1c1c;
+  --color-neutral-700: #3c3c3c;
   --color-neutral-600: #525252;
   --color-neutral-500: #767676;
-  --color-neutral-400: #9B9B9B;
-  --color-neutral-300: #C0C0C0;
-  --color-neutral-200: #DCDCDC;
-  --color-neutral-100: #F1F1F1;
-  --color-white: #F1F1F1;
+  --color-neutral-400: #9b9b9b;
+  --color-neutral-300: #c0c0c0;
+  --color-neutral-200: #dcdcdc;
+  --color-neutral-100: #f1f1f1;
+  --color-white: #f1f1f1;
+  /*
+    BRAND
+  */
+  --color-primary: #0069ed;
 }
 
 /*
@@ -24,7 +31,7 @@ in exactly the same way
   /* i.e. all child elements with the box-sizing property will now inherit from this */
   box-sizing: inherit;
 
-  font-family: 'Cabin', sans-serif;
+  font-family: "Cabin", sans-serif;
 }
 
 html {
@@ -50,13 +57,12 @@ button {
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
-  background: #0069ed;
+  background: var(--color-primary);
   color: var(--color-white);
   font-family: sans-serif;
   cursor: pointer;
   text-align: center;
-  transition: background 250ms ease-in-out, 
-              transform 150ms ease;
+  transition: background 250ms ease-in-out, transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -75,17 +81,41 @@ button:active {
   transform: scale(0.99);
 }
 
+a,
+a:link,
+a:visited {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--color-primary);
+}
+
+a:focus {
+  outline: 1px solid var(--color-black);
+}
+
 /* 
   Styling text inputs only
 */
-input:not([type=submit]):not([type=file]) {
+input:not([type="submit"]):not([type="file"]) {
   padding: 1rem 2rem;
   border-radius: 0;
   border: 2px solid var(--color-black);
   background-color: var(--color-white);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Space Mono', monospace;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Mono", monospace;
   font-weight: 700;
 }
