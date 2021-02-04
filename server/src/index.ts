@@ -95,7 +95,7 @@ const main = async () => {
     "/auth/github/callback",
     passport.authenticate("github", { failureRedirect: "/auth/error" }),
     (_, res) => {
-      res.redirect("http://localhost:3000");
+      res.redirect(`${process.env.CORS_ORIGIN}`);
     }
   );
 
