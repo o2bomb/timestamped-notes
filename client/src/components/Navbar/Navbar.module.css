@@ -1,4 +1,12 @@
 .navbar {
-  height: 3rem;
-  background-color: black;
+  display: flex;
+  padding: 2rem 1rem;
+}
+
+.brand {
+
+}
+
+.buttonGroup {
+  margin-left: auto;
 }
