@@ -2,7 +2,7 @@ import axios from "axios";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import Layout from "../components/Layout";
-import { useAddNoteMutation, useGetLectureQuery } from "../generated/graphql";
+import { useAddNoteMutation, useGetLectureQuery, useMeLazyQuery, useMeQuery } from "../generated/graphql";
 
 import styles from "../styles/Home.module.css";
 import { secondsToTime } from "../utils/secondsToTime";
@@ -89,21 +89,6 @@ export default function Home() {
           </form>
         </div>
       </div>
-      <button
-        onClick={async () => {
-          let data;
-          try {
-            data = await axios.get("http://localhost:5000", {
-              withCredentials: true,
-            });
-            console.log(data);
-          } catch (e) {
-            console.debug(e);
-          }
-        }}
-      >
-        Click me
-      </button>
     </Layout>
   );
 }
