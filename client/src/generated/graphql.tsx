@@ -86,11 +86,13 @@ export type MutationAddNoteArgs = {
 
 export type MutationCreateLectureArgs = {
   videoUrl: Scalars['String'];
+  thumbnailUrl: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type RegularLectureFragment = (
   { __typename?: 'Lecture' }
-  & Pick<Lecture, 'id' | 'videoUrl' | 'createdAt' | 'updatedAt'>
+  & Pick<Lecture, 'id' | 'title' | 'thumbnailUrl' | 'videoUrl' | 'creatorId' | 'createdAt' | 'updatedAt'>
   & { notes: Array<(
     { __typename?: 'Note' }
     & RegularNoteFragment
@@ -133,6 +135,8 @@ export type AddNoteMutation = (
 
 export type CreateLectureMutationVariables = Exact<{
   videoUrl: Scalars['String'];
+  thumbnailUrl: Scalars['String'];
+  title: Scalars['String'];
 }>;
 
 
@@ -204,10 +208,13 @@ export const RegularNoteFragmentDoc = gql`
 export const RegularLectureFragmentDoc = gql`
     fragment RegularLecture on Lecture {
   id
+  title
+  thumbnailUrl
   videoUrl
   notes {
     ...RegularNote
   }
+  creatorId
   createdAt
   updatedAt
 }
@@ -266,8 +273,8 @@ export type AddNoteMutationHookResult = ReturnType<typeof useAddNoteMutation>;
 export type AddNoteMutationResult = Apollo.MutationResult<AddNoteMutation>;
 export type AddNoteMutationOptions = Apollo.BaseMutationOptions<AddNoteMutation, AddNoteMutationVariables>;
 export const CreateLectureDocument = gql`
-    mutation CreateLecture($videoUrl: String!) {
-  createLecture(videoUrl: $videoUrl) {
+    mutation CreateLecture($videoUrl: String!, $thumbnailUrl: String!, $title: String!) {
+  createLecture(videoUrl: $videoUrl, thumbnailUrl: $thumbnailUrl, title: $title) {
     ...RegularLecture
   }
 }
@@ -288,6 +295,8 @@ export type CreateLectureMutationFn = Apollo.MutationFunction<CreateLectureMutat
  * const [createLectureMutation, { data, loading, error }] = useCreateLectureMutation({
  *   variables: {
  *      videoUrl: // value for 'videoUrl'
+ *      thumbnailUrl: // value for 'thumbnailUrl'
+ *      title: // value for 'title'
  *   },
  * });
  */

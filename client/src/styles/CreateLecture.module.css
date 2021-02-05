@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.form label {
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.thumbnail {
+  width: 100%;
+}
+
+.submit {
+  margin-top: 2rem;
+  margin-left: auto;
+}

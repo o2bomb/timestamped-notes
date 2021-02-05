@@ -1,9 +1,12 @@
 fragment RegularLecture on Lecture {
-  id
+	id
+  title
+  thumbnailUrl
   videoUrl
-  notes {
+  notes {  
     ...RegularNote
   }
+  creatorId
   createdAt
   updatedAt
 }

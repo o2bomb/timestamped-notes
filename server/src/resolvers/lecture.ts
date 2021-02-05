@@ -19,9 +19,7 @@ import { isAuthenticated } from "../middlewares/isAuthenticated";
 @Resolver(Lecture)
 export class LectureResolver {
   @FieldResolver(() => User, { nullable: true })
-  creator(
-    @Root() lecture: Lecture
-  ) {
+  creator(@Root() lecture: Lecture) {
     return User.findOne(lecture.creatorId);
   }
 
@@ -46,7 +44,7 @@ export class LectureResolver {
     const [{ exists }] = await Lecture.query(
       isExistsQuery(
         Lecture.createQueryBuilder()
-          .select('*')
+          .select("*")
           .where(`id = ${id} AND "creatorId" = ${req.user!.id}`)
           .getQuery()
       )
@@ -73,15 +71,12 @@ export class LectureResolver {
 
   @Query(() => Lecture, { nullable: true })
   @UseMiddleware(isAuthenticated)
-  getLecture(
-    @Arg("id", () => Int) id: number,
-    @Ctx() { req }: MyContext
-  ) {
+  getLecture(@Arg("id", () => Int) id: number, @Ctx() { req }: MyContext) {
     return Lecture.findOne({
       where: {
         creatorId: req.user!.id,
-        id
-      }
+        id,
+      },
     });
   }
 
@@ -92,15 +87,20 @@ export class LectureResolver {
 
   @Mutation(() => Lecture, { nullable: true })
   @UseMiddleware(isAuthenticated)
-  createLecture(@Arg("videoUrl", () => String) videoUrl: string,
+  createLecture(
+    @Arg("title", () => String) title: string,
+    @Arg("thumbnailUrl", () => String) thumbnailUrl: string,
+    @Arg("videoUrl", () => String) videoUrl: string,
     @Ctx() { req }: MyContext
   ) {
-    if (!videoUrl) {
+    if (!videoUrl || !thumbnailUrl || !title) {
       return;
     }
 
     return Lecture.create({
       creatorId: req.user!.id,
+      title,
+      thumbnailUrl,
       videoUrl,
     }).save();
   }

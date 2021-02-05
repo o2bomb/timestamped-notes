@@ -1,5 +1,5 @@
-mutation CreateLecture($videoUrl: String!) {
-  createLecture(videoUrl: $videoUrl) {
+mutation CreateLecture($videoUrl: String!, $thumbnailUrl: String!, $title: String!) {
+  createLecture(videoUrl: $videoUrl, thumbnailUrl: $thumbnailUrl, title: $title) {
     ...RegularLecture
   }
 }
