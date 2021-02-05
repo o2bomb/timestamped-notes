@@ -52,6 +52,7 @@ body {
 }
 
 button {
+  font-size: inherit;
   display: inline-block;
   border: none;
   padding: 1rem 2rem;
@@ -59,21 +60,19 @@ button {
   text-decoration: none;
   background: var(--color-primary);
   color: var(--color-white);
-  font-family: sans-serif;
   cursor: pointer;
   text-align: center;
-  transition: background 250ms ease-in-out, transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 button:hover,
 button:focus {
-  background: #0053ba;
+  background: var(--color-black);
 }
 
 button:focus {
-  outline: 1px solid #fff;
+  outline: 1px solid var(--color-white);
   outline-offset: -4px;
 }
 
@@ -108,6 +107,11 @@ input:not([type="submit"]):not([type="file"]) {
   border-radius: 0;
   border: 2px solid var(--color-black);
   background-color: var(--color-white);
+}
+
+input:not([type="submit"]):not([type="file"]):focus {
+  outline: 1px solid var(--color-black);
+  outline-offset: 4px;
 }
 
 h1,
