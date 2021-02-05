@@ -39,7 +39,7 @@ export class YouTubeResolver {
 
     return {
       title: snippet?.title as string,
-      thumbnailUrl: snippet?.thumbnails?.medium?.url as string
+      thumbnailUrl: snippet?.thumbnails?.maxres?.url as string
     };
   }
 }
