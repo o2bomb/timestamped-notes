@@ -6,9 +6,10 @@ declare namespace NodeJS {
     CORS_ORIGIN: string;
     PORT: string;
     SESSION_SECRET: string;
+    NEXT_PUBLIC_GRAPHQL_SERVER_URL: string;
     GITHUB_OAUTH_CLIENT_ID: string;
     GITHUB_OAUTH_CLIENT_SECRET: string;
     GITHUB_OAUTH_CALLBACK_URL: string;
-    NEXT_PUBLIC_GRAPHQL_SERVER_URL: string;
+    YOUTUBE_DATA_API_KEY: string;
   }
 }

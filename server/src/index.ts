@@ -18,6 +18,7 @@ import { UserResolver } from "./resolvers/user";
 import { COOKIE_NAME, __prod__ } from "./constants";
 
 import "./passport";
+import { YouTubeResolver } from "./resolvers/youtube";
 
 const main = async () => {
   await createConnection({
@@ -61,7 +62,7 @@ const main = async () => {
   // GRAPHQL AND CORS
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [LectureResolver, NoteResolver, UserResolver],
+      resolvers: [LectureResolver, NoteResolver, UserResolver, YouTubeResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
