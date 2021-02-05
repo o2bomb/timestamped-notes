@@ -2,7 +2,13 @@ import React from "react";
 import Head from "next/head";
 import Navbar from "../Navbar";
 
-const Layout: React.FC = ({ children }) => {
+import styles from "./Layout.module.css";
+
+interface LayoutProps {
+  navigation?: boolean
+}
+
+const Layout: React.FC<LayoutProps> = ({ navigation = true, children }) => {
   return (
     <>
       <Head>
@@ -19,8 +25,10 @@ const Layout: React.FC = ({ children }) => {
           rel="stylesheet"
         />
       </Head>
-      <Navbar />
-      <main>{children}</main>
+      {
+        !navigation ? null : <Navbar />
+      }
+      <main className={styles.main}>{children}</main>
     </>
   );
 };
