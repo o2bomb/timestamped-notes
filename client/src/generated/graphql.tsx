@@ -18,6 +18,7 @@ export type Query = {
   getLecture?: Maybe<Lecture>;
   lectures: Array<Lecture>;
   me?: Maybe<User>;
+  youtube?: Maybe<YouTubeVideo>;
 };
 
 
@@ -25,12 +26,19 @@ export type QueryGetLectureArgs = {
   id: Scalars['Int'];
 };
 
+
+export type QueryYoutubeArgs = {
+  videoUrl: Scalars['String'];
+};
+
 export type Lecture = {
   __typename?: 'Lecture';
   id: Scalars['Float'];
   creatorId: Scalars['Float'];
   creator: User;
+  title: Scalars['String'];
   videoUrl: Scalars['String'];
+  thumbnailUrl: Scalars['String'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   notes: Array<Note>;
@@ -54,6 +62,12 @@ export type Note = {
   timestamp: Scalars['Float'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+};
+
+export type YouTubeVideo = {
+  __typename?: 'YouTubeVideo';
+  title: Scalars['String'];
+  thumbnailUrl: Scalars['String'];
 };
 
 export type Mutation = {
@@ -95,6 +109,11 @@ export type RegularUserFragment = (
     { __typename?: 'Lecture' }
     & Pick<Lecture, 'id'>
   )> }
+);
+
+export type RegularYouTubeVideoFragment = (
+  { __typename?: 'YouTubeVideo' }
+  & Pick<YouTubeVideo, 'title' | 'thumbnailUrl'>
 );
 
 export type AddNoteMutationVariables = Exact<{
@@ -149,6 +168,19 @@ export type GetLecturesQuery = (
   )> }
 );
 
+export type GetYouTubeVideoQueryVariables = Exact<{
+  videoUrl: Scalars['String'];
+}>;
+
+
+export type GetYouTubeVideoQuery = (
+  { __typename?: 'Query' }
+  & { youtube?: Maybe<(
+    { __typename?: 'YouTubeVideo' }
+    & RegularYouTubeVideoFragment
+  )> }
+);
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -191,6 +223,12 @@ export const RegularUserFragmentDoc = gql`
   }
   createdAt
   updatedAt
+}
+    `;
+export const RegularYouTubeVideoFragmentDoc = gql`
+    fragment RegularYouTubeVideo on YouTubeVideo {
+  title
+  thumbnailUrl
 }
     `;
 export const AddNoteDocument = gql`
@@ -324,6 +362,39 @@ export function useGetLecturesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetLecturesQueryHookResult = ReturnType<typeof useGetLecturesQuery>;
 export type GetLecturesLazyQueryHookResult = ReturnType<typeof useGetLecturesLazyQuery>;
 export type GetLecturesQueryResult = Apollo.QueryResult<GetLecturesQuery, GetLecturesQueryVariables>;
+export const GetYouTubeVideoDocument = gql`
+    query GetYouTubeVideo($videoUrl: String!) {
+  youtube(videoUrl: $videoUrl) {
+    ...RegularYouTubeVideo
+  }
+}
+    ${RegularYouTubeVideoFragmentDoc}`;
+
+/**
+ * __useGetYouTubeVideoQuery__
+ *
+ * To run a query within a React component, call `useGetYouTubeVideoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetYouTubeVideoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetYouTubeVideoQuery({
+ *   variables: {
+ *      videoUrl: // value for 'videoUrl'
+ *   },
+ * });
+ */
+export function useGetYouTubeVideoQuery(baseOptions: Apollo.QueryHookOptions<GetYouTubeVideoQuery, GetYouTubeVideoQueryVariables>) {
+        return Apollo.useQuery<GetYouTubeVideoQuery, GetYouTubeVideoQueryVariables>(GetYouTubeVideoDocument, baseOptions);
+      }
+export function useGetYouTubeVideoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetYouTubeVideoQuery, GetYouTubeVideoQueryVariables>) {
+          return Apollo.useLazyQuery<GetYouTubeVideoQuery, GetYouTubeVideoQueryVariables>(GetYouTubeVideoDocument, baseOptions);
+        }
+export type GetYouTubeVideoQueryHookResult = ReturnType<typeof useGetYouTubeVideoQuery>;
+export type GetYouTubeVideoLazyQueryHookResult = ReturnType<typeof useGetYouTubeVideoLazyQuery>;
+export type GetYouTubeVideoQueryResult = Apollo.QueryResult<GetYouTubeVideoQuery, GetYouTubeVideoQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

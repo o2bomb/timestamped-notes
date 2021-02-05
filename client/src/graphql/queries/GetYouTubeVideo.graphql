@@ -1,0 +1,5 @@
+query GetYouTubeVideo($videoUrl: String!) {
+  youtube(videoUrl: $videoUrl) {
+    ...RegularYouTubeVideo
+  }
+}

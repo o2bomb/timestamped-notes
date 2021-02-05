@@ -1,0 +1,4 @@
+fragment RegularYouTubeVideo on YouTubeVideo {
+  title
+  thumbnailUrl
+}
