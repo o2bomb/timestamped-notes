@@ -83,7 +83,7 @@ const main = async () => {
   });
 
   app.get("/logout", (req, res) => {
-    req.session.destroy(function (err) {
+    req.session.destroy(function (_) {
       res.redirect("/");
     });
   });
