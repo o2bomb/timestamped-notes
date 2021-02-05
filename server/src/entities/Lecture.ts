@@ -32,7 +32,15 @@ export class Lecture extends BaseEntity {
 
   @Field()
   @Column()
+  title!: string;
+
+  @Field()
+  @Column()
   videoUrl!: string;
+
+  @Field()
+  @Column()
+  thumbnailUrl!: string;
 
   @Field(() => String)
   @CreateDateColumn()
