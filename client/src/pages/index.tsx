@@ -1,19 +1,22 @@
 import Link from "next/link";
 import Layout from "../components/Layout/Layout";
-import { useGetLecturesQuery } from "../generated/graphql";
+import VideoCard from "../components/VideoCard";
+import { Lecture, useGetLecturesQuery } from "../generated/graphql";
+
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const { data } = useGetLecturesQuery();
 
   return (
-    <Layout>
+    <Layout variant="large">
+      <div className={styles.container}>
       {
         data?.lectures.map((lecture, index) => (
-          <Link key={index} href={`/lecture/${lecture.id}`}>
-            {lecture.videoUrl}
-          </Link>
+          <VideoCard key={index} {...(lecture as Lecture)} />
         ))
       }
+      </div>
     </Layout>
   )
 }

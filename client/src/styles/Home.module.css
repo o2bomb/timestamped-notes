@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container > *:not(:last-child) {
+  margin-right: 2rem;
+}
