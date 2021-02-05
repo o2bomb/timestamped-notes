@@ -26,6 +26,7 @@ CORS_ORIGIN=http://localhost:3000
 PORT=5000
 SESSION_SECRET=laksdjfpq08w439owijhdklmbsdfklqjwyhef98
 NEXT_PUBLIC_GRAPHQL_SERVER_URL=http://localhost:5000/graphql
+GITHUB_OAUTH_CALLBACK_URL=http://localhost:5000/auth/github/callback
 ```
 |Environment variable|Description|
 |-|-|
@@ -36,3 +37,7 @@ NEXT_PUBLIC_GRAPHQL_SERVER_URL=http://localhost:5000/graphql
 |`PORT`|Port that the Express server uses/exposes|
 |`SESSION_SECRET`|Used for encrypting session data. Put a long, hard to crack string here|
 |`NEXT_PUBLIC_GRAPHQL_SERVER_URL`|Endpoint that the client uses to access the GraphQL server|
+|`GITHUB_OAUTH_CLIENT_ID`|GitHub OAuth client ID|
+|`GITHUB_OAUTH_CLIENT_SECRET`|GitHub OAuth client secret|
+|`GITHUB_OAUTH_CALLBACK_URL`|GitHub OAuth callback URL|
+|`YOUTUBE_DATA_API_KEY`|API key for getting data from the YouTube Data API|
