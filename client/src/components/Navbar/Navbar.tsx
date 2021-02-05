@@ -12,19 +12,16 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   return (
     <header className={styles.navbar}>
       <div className={styles.brand}>
-        {data?.me
-          ? `Welcome back, ${data.me.displayName}`
-          : (
-            <Link href="/">
-              timestamped_notes
-            </Link>
-          )}
+        <Link href="/">timestamped_notes</Link>
       </div>
       <div className={styles.buttonGroup}>
         {data?.me ? (
-          <Link href="/logout">Logout</Link>
+          <>
+            <Link href="/create-lecture">Create a lecture</Link>
+            <Link href="/logout">Logout</Link>
+          </>
         ) : (
-          <Link href="/auth/github">Sign in with GitHub</Link>
+          <Link href="/login">Sign in</Link>
         )}
       </div>
     </header>
