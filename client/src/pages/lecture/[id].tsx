@@ -26,24 +26,16 @@ const Lecture: React.FC = ({}) => {
   });
   const [addNote] = useAddNoteMutation();
 
-  useEffect(() => {
-    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
-  if (loading) {
-    return <Layout>Loading lecture...</Layout>;
-  }
-
-  if (error || !data) {
-    return <Layout>Error in fetching lecture data</Layout>;
-  }
-
   const setVideoTime = (timestamp: number) => {
     if (target === undefined || target === null) {
       return;
     }
     target.seekTo(timestamp);
   };
+
+  useEffect(() => {
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   const handleSubmitNote = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,12 +53,22 @@ const Lecture: React.FC = ({}) => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  if (loading) {
+    return <Layout>Loading lecture...</Layout>;
+  }
+
+  if (error || !data?.getLecture) {
+    return <Layout>Error in fetching lecture data</Layout>;
+  }
+
+  const { youtubeVideoId, notes } = data.getLecture;
+
   return (
     <Layout>
       <div className={styles.container}>
         <YouTube
           containerClassName={styles.video}
-          videoId="kd1u1ZdJz4w"
+          videoId={youtubeVideoId}
           onReady={(e) => {
             setTarget(e.target);
             // console.log(e.target);
@@ -74,7 +76,7 @@ const Lecture: React.FC = ({}) => {
         />
         <div className={styles.notesSection}>
           <div className={styles.list}>
-            {data?.getLecture?.notes.map((note, index) => {
+            {notes.map((note, index) => {
               return (
                 <div key={index} className={styles.note}>
                   <button

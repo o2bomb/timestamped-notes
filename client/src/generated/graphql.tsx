@@ -39,6 +39,7 @@ export type Lecture = {
   title: Scalars['String'];
   videoUrl: Scalars['String'];
   thumbnailUrl: Scalars['String'];
+  youtubeVideoId: Scalars['String'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   notes: Array<Note>;
@@ -92,7 +93,7 @@ export type MutationCreateLectureArgs = {
 
 export type RegularLectureFragment = (
   { __typename?: 'Lecture' }
-  & Pick<Lecture, 'id' | 'title' | 'thumbnailUrl' | 'videoUrl' | 'creatorId' | 'createdAt' | 'updatedAt'>
+  & Pick<Lecture, 'id' | 'title' | 'thumbnailUrl' | 'videoUrl' | 'youtubeVideoId' | 'creatorId' | 'createdAt' | 'updatedAt'>
   & { notes: Array<(
     { __typename?: 'Note' }
     & RegularNoteFragment
@@ -214,6 +215,7 @@ export const RegularLectureFragmentDoc = gql`
   notes {
     ...RegularNote
   }
+  youtubeVideoId
   creatorId
   createdAt
   updatedAt

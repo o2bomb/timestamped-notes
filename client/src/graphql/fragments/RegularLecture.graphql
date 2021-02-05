@@ -6,6 +6,7 @@ fragment RegularLecture on Lecture {
   notes {  
     ...RegularNote
   }
+  youtubeVideoId
   creatorId
   createdAt
   updatedAt

@@ -15,6 +15,7 @@ import { isExistsQuery } from "../utils/isExistsQuery";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { getYouTubeVideoId } from "../utils/getYouTubeVideoId";
 
 @Resolver(Lecture)
 export class LectureResolver {
@@ -102,6 +103,7 @@ export class LectureResolver {
       title,
       thumbnailUrl,
       videoUrl,
+      youtubeVideoId: getYouTubeVideoId(videoUrl)
     }).save();
   }
 }

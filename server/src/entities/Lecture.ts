@@ -42,6 +42,10 @@ export class Lecture extends BaseEntity {
   @Column()
   thumbnailUrl!: string;
 
+  @Field()
+  @Column()
+  youtubeVideoId!: string;
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
