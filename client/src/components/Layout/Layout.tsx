@@ -4,11 +4,29 @@ import Navbar from "../Navbar";
 
 import styles from "./Layout.module.css";
 
+type LayoutVariant = "small" | "regular" | "large";
+
 interface LayoutProps {
-  navigation?: boolean
+  navigation?: boolean;
+  variant?: LayoutVariant;
 }
 
-const Layout: React.FC<LayoutProps> = ({ navigation = true, children }) => {
+const Layout: React.FC<LayoutProps> = ({ navigation = true, variant = "regular", children }) => {
+  let maxWidth;
+  switch (variant) {
+    case "large":
+      maxWidth = "100%";
+      break;
+    case "regular":
+      maxWidth = "80rem";
+      break;
+    case "small":
+      maxWidth = "40rem";
+      break;
+    default:
+      maxWidth = "80rem";
+  }
+
   return (
     <>
       <Head>
@@ -25,10 +43,10 @@ const Layout: React.FC<LayoutProps> = ({ navigation = true, children }) => {
           rel="stylesheet"
         />
       </Head>
-      {
-        !navigation ? null : <Navbar />
-      }
-      <main className={styles.main}>{children}</main>
+      {!navigation ? null : <Navbar />}
+      <main className={styles.main} style={{
+        maxWidth
+      }}>{children}</main>
     </>
   );
 };
