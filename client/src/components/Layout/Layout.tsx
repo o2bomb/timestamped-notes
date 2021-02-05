@@ -13,9 +13,11 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ navigation = true, variant = "regular", children }) => {
   let maxWidth;
+  let margin = undefined;
   switch (variant) {
     case "large":
       maxWidth = "100%";
+      margin = "0 1rem";
       break;
     case "regular":
       maxWidth = "80rem";
@@ -45,7 +47,8 @@ const Layout: React.FC<LayoutProps> = ({ navigation = true, variant = "regular",
       </Head>
       {!navigation ? null : <Navbar />}
       <main className={styles.main} style={{
-        maxWidth
+        maxWidth,
+        margin
       }}>{children}</main>
     </>
   );
