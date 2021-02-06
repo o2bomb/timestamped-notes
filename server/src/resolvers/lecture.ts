@@ -34,6 +34,32 @@ export class LectureResolver {
     });
   }
 
+  @Query(() => Boolean)
+  @UseMiddleware(isAuthenticated)
+  async lectureExists(
+    @Arg("videoUrl", () => String) videoUrl: string,
+    @Ctx() { req }: MyContext
+  ) {
+    const youtubeVideoId = getYouTubeVideoId(videoUrl);
+
+    const [{ exists }] = await Lecture.query(
+      isExistsQuery(
+        Lecture.createQueryBuilder()
+          .select("*")
+          .where(
+            youtubeVideoId
+              ? `"youtubeVideoId" = '${youtubeVideoId}' AND "creatorId" = ${
+                  req.user!.id
+                }`
+              : `"videoUrl" = '${videoUrl}' AND "creatorId" = ${req.user!.id}`
+          )
+          .getQuery()
+      )
+    );
+
+    return !!exists;
+  }
+
   @Mutation(() => Lecture, { nullable: true })
   @UseMiddleware(isAuthenticated)
   async addNote(
@@ -103,7 +129,7 @@ export class LectureResolver {
       title,
       thumbnailUrl,
       videoUrl,
-      youtubeVideoId: getYouTubeVideoId(videoUrl)
+      youtubeVideoId: getYouTubeVideoId(videoUrl),
     }).save();
   }
 }
