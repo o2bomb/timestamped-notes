@@ -1,6 +1,7 @@
 import { Arg, Field, ObjectType, Query, Resolver } from "type-graphql";
 import { google } from "googleapis";
 import { getYouTubeVideoId } from "../utils/getYouTubeVideoId";
+import { getYouTubeVideoThumbnailUrl } from "../utils/getYouTubeVideoThumbnailUrl";
 
 const youtube = google.youtube("v3");
 
@@ -39,7 +40,7 @@ export class YouTubeResolver {
 
     return {
       title: snippet?.title as string,
-      thumbnailUrl: snippet?.thumbnails?.maxres?.url as string
+      thumbnailUrl: getYouTubeVideoThumbnailUrl(snippet?.thumbnails)
     };
   }
 }
