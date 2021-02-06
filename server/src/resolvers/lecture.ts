@@ -108,8 +108,13 @@ export class LectureResolver {
   }
 
   @Query(() => [Lecture])
-  lectures() {
-    return Lecture.createQueryBuilder().getMany();
+  @UseMiddleware(isAuthenticated)
+  lectures(@Ctx() { req }: MyContext) {
+    return Lecture.find({
+      where: {
+        creatorId: req.user!.id,
+      },
+    });
   }
 
   @Mutation(() => Lecture, { nullable: true })

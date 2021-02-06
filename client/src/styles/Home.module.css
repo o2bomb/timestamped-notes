@@ -11,6 +11,10 @@
   margin-top: 1rem;
 }
 
+.info {
+  text-align: center;
+}
+
 .empty {
   height: 0;
   flex-grow: 1;
