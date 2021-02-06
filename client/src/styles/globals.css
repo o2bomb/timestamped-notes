@@ -1,5 +1,10 @@
 :root {
   /*
+    FONTS
+  */
+  --font-brand: "Space Mono", monospace;
+  --font-primary: "Cabin", sans-serif;
+  /*
     NEUTRALS
   */
   --color-black: #000000;
@@ -31,7 +36,7 @@ in exactly the same way
   /* i.e. all child elements with the box-sizing property will now inherit from this */
   box-sizing: inherit;
 
-  font-family: "Cabin", sans-serif;
+  font-family: var(--font-primary);
 }
 
 html {
@@ -66,8 +71,7 @@ button {
   -moz-appearance: none;
 }
 
-button:hover,
-button:focus {
+button:hover {
   background: var(--color-black);
 }
 
@@ -78,6 +82,11 @@ button:focus {
 
 button:active {
   transform: scale(0.99);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-neutral-600);
 }
 
 a,
@@ -120,6 +129,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Space Mono", monospace;
+  font-family: var(--font-brand);
   font-weight: 700;
 }
