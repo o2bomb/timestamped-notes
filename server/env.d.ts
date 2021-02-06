@@ -7,6 +7,9 @@ declare namespace NodeJS {
     PORT: string;
     SESSION_SECRET: string;
     NEXT_PUBLIC_GRAPHQL_SERVER_URL: string;
+    GOOGLE_OAUTH_CLIENT_ID: string;
+    GOOGLE_OAUTH_CLIENT_SECRET: string;
+    GOOGLE_OAUTH_CALLBACK_URL: string;
     GITHUB_OAUTH_CLIENT_ID: string;
     GITHUB_OAUTH_CLIENT_SECRET: string;
     GITHUB_OAUTH_CALLBACK_URL: string;
