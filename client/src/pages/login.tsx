@@ -17,7 +17,7 @@ const login: React.FC = ({}) => {
     <Layout variant="small" navigation={false}>
       <div className={styles.container}>
         <div className={styles.title}>
-          Sign in to <span>timestamped_notes</span>
+          Sign in to <Link href="/">timestamped_notes</Link>
         </div>
         <div className={styles.buttonGroup}>
           <Link href="/auth/google">
