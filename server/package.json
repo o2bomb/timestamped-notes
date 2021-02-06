@@ -27,6 +27,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@types/passport-google-oauth2": "^0.1.3",
     "apollo-server-express": "^2.19.2",
     "connect-redis": "^5.0.0",
     "dotenv-safe": "^8.2.0",
@@ -38,6 +39,7 @@
     "node": "^15.4.0",
     "passport": "^0.4.1",
     "passport-github2": "^0.1.12",
+    "passport-google-oauth2": "^0.2.0",
     "pg": "^8.5.1",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.30"

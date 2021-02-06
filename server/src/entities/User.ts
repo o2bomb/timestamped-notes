@@ -20,9 +20,21 @@ export class User extends BaseEntity {
   @OneToMany(() => Lecture, lecture => lecture.creator)
   lectures: Lecture[];
   
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   githubId: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  googleId: string;
+  
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  facebookId: string;
+  
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  twitterId: string;
 
   @Field()
   @Column()

@@ -99,15 +99,28 @@ const main = async () => {
   );
 
   app.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ['email', 'profile'] })
+  );
+
+  app.get(
     "/auth/github/callback",
     passport.authenticate("github", { failureRedirect: "/auth/error" }),
     (_, res) => {
       res.redirect(`${process.env.CORS_ORIGIN}`);
     }
   );
+  
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/auth/error" }),
+    (_, res) => {
+      res.redirect(`${process.env.CORS_ORIGIN}`);
+    }
+  );
 
   // Needed for accessing req.user within GraphQL resolvers
-  app.use("/graphql", passport.authenticate("github", { session: true }));
+  // app.use("/graphql", passport.authenticate("github", { session: true }));
 
   // if (process.env.NODE_ENV === "production") {
   //   app.use("/", express.static(path.join(__dirname, "..", "client", "dist")));
