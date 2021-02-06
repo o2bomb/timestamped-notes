@@ -64,7 +64,7 @@ const Lecture: React.FC = ({}) => {
   const { youtubeVideoId, notes } = data.getLecture;
 
   return (
-    <Layout>
+    <Layout variant="large">
       <div className={styles.container}>
         <YouTube
           containerClassName={styles.video}
@@ -102,7 +102,7 @@ const Lecture: React.FC = ({}) => {
               type="text"
               placeholder="Make notes here"
             />
-            <button type="submit">Create note</button>
+            <button type="submit" aria-label="Submit new note">Submit</button>
           </form>
         </div>
       </div>
