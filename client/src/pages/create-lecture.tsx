@@ -16,11 +16,22 @@ const CreateLecture: React.FC = () => {
     getYouTubeVideo,
     { data, loading, error },
   ] = useGetYouTubeVideoLazyQuery();
-  const [createLecture] = useCreateLectureMutation();
+  const [createLecture] = useCreateLectureMutation({
+    update: (cache, { data }) => {
+      if (!data) return;
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+      const { createLecture } = data;
+      cache.modify({
+        fields: {
+          lectures(existingLectures) {
+            // automatically appends the new lecture to
+            // existingLectures (an array of lectures) if
+            // nothing is returned in this function
+          }
+        }
+      })
+    }
+  });
 
   const debouncedGetYouTubeVideo = useCallback(
     debounce((val: string) => {
