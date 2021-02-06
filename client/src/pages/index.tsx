@@ -11,12 +11,11 @@ export default function Home() {
   return (
     <Layout variant="large">
       <div className={styles.container}>
-      {
-        data?.lectures.map((lecture, index) => (
+        {data?.lectures.map((lecture, index) => (
           <VideoCard key={index} {...(lecture as Lecture)} />
-        ))
-      }
+        ))}
+        <div className={styles.empty}></div>
       </div>
     </Layout>
-  )
+  );
 }
