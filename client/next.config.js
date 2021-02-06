@@ -2,8 +2,8 @@ module.exports = {
   async rewrites() {
     return process.env.NODE_ENV === "development" ? [
       {
-        source: '/auth/github',
-        destination: 'http://server:5000/auth/github',
+        source: '/auth/:path',
+        destination: 'http://server:5000/auth/:path',
       },
       {
         source: '/logout',

@@ -21,7 +21,7 @@ const login: React.FC = ({}) => {
         </div>
         <div className={styles.buttonGroup}>
           <Link href="/auth/google">
-            <button disabled>Sign in with Google</button>
+            <button>Sign in with Google</button>
           </Link>
           <Link href="/auth/facebook">
             <button disabled>Sign in with Facebook</button>
