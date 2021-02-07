@@ -37,7 +37,13 @@ GITHUB_OAUTH_CALLBACK_URL=http://localhost:5000/auth/github/callback
 |`PORT`|Port that the Express server uses/exposes|
 |`SESSION_SECRET`|Used for encrypting session data. Put a long, hard to crack string here|
 |`NEXT_PUBLIC_GRAPHQL_SERVER_URL`|Endpoint that the client uses to access the GraphQL server|
+|`GOOGLE_OAUTH_CLIENT_ID`|Google OAuth client ID|
+|`GOOGLE_OAUTH_CLIENT_SECRET`|Google OAuth client secret|
+|`GOOGLE_OAUTH_CALLBACK_URL`|Google OAuth callback URL|
 |`GITHUB_OAUTH_CLIENT_ID`|GitHub OAuth client ID|
 |`GITHUB_OAUTH_CLIENT_SECRET`|GitHub OAuth client secret|
 |`GITHUB_OAUTH_CALLBACK_URL`|GitHub OAuth callback URL|
+|`FACEBOOK_OAUTH_CLIENT_ID`|Facebook OAuth client ID|
+|`FACEBOOK_OAUTH_CLIENT_SECRET`|Facebook OAuth client secret|
+|`FACEBOOK_OAUTH_CALLBACK_URL`|Facebook OAuth callback URL|
 |`YOUTUBE_DATA_API_KEY`|API key for getting data from the YouTube Data API|
