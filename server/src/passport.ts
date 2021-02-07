@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { Strategy as FacebookStrategy } from "passport-facebook";
 import { User } from "./entities/User";
 
 passport.serializeUser((user: any, done) => {
@@ -66,8 +67,6 @@ passport.use(
         },
       });
 
-      console.log(profile);
-
       let avatarUrl = "";
       if (profile.photos) {
         if (profile.photos.length > 0) {
@@ -80,6 +79,34 @@ passport.use(
           googleId: profile.id,
           displayName: profile.displayName,
           avatarUrl
+        }).save();
+      }
+
+      // user object is passed to serializeUser()
+      return done(null, user);
+    }
+  )
+)
+
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_OAUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_OAUTH_CLIENT_SECRET,
+      callbackURL: process.env.FACEBOOK_OAUTH_CALLBACK_URL
+    },
+    async (_: string, __: string, profile: any, done: any) => {
+      let user = await User.findOne({
+        where: {
+          facebookId: profile.id,
+        },
+      });
+
+      if (!user) {
+        user = await User.create({
+          facebookId: profile.id,
+          displayName: profile.displayName,
+          avatarUrl: ""
         }).save();
       }
 

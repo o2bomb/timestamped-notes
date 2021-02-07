@@ -102,6 +102,11 @@ const main = async () => {
     "/auth/google",
     passport.authenticate("google", { scope: ['email', 'profile'] })
   );
+  
+  app.get(
+    "/auth/facebook",
+    passport.authenticate("facebook")
+  );
 
   app.get(
     "/auth/github/callback",
@@ -114,6 +119,14 @@ const main = async () => {
   app.get(
     "/auth/google/callback",
     passport.authenticate("google", { failureRedirect: "/auth/error" }),
+    (_, res) => {
+      res.redirect(`${process.env.CORS_ORIGIN}`);
+    }
+  );
+
+  app.get(
+    "/auth/facebook/callback",
+    passport.authenticate("facebook", { failureRedirect: "/auth/error" }),
     (_, res) => {
       res.redirect(`${process.env.CORS_ORIGIN}`);
     }

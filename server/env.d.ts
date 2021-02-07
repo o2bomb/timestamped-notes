@@ -13,6 +13,9 @@ declare namespace NodeJS {
     GITHUB_OAUTH_CLIENT_ID: string;
     GITHUB_OAUTH_CLIENT_SECRET: string;
     GITHUB_OAUTH_CALLBACK_URL: string;
+    FACEBOOK_OAUTH_CLIENT_ID: string;
+    FACEBOOK_OAUTH_CLIENT_SECRET: string;
+    FACEBOOK_OAUTH_CALLBACK_URL: string;
     YOUTUBE_DATA_API_KEY: string;
   }
 }
