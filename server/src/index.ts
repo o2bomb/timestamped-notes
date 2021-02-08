@@ -104,8 +104,21 @@ const main = async () => {
   );
   
   app.get(
+    "/auth/twitter",
+    passport.authenticate("twitter")
+  );
+
+  app.get(
     "/auth/facebook",
     passport.authenticate("facebook")
+  );
+
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/auth/error" }),
+    (_, res) => {
+      res.redirect(`${process.env.CORS_ORIGIN}`);
+    }
   );
 
   app.get(
@@ -115,10 +128,10 @@ const main = async () => {
       res.redirect(`${process.env.CORS_ORIGIN}`);
     }
   );
-  
+
   app.get(
-    "/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/auth/error" }),
+    "/auth/twitter/callback",
+    passport.authenticate("twitter", { failureRedirect: "/auth/error" }),
     (_, res) => {
       res.redirect(`${process.env.CORS_ORIGIN}`);
     }

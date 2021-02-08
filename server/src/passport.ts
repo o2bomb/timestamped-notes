@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as TwitterStrategy } from "passport-twitter";
 import { User } from "./entities/User";
 
 passport.serializeUser((user: any, done) => {
@@ -107,6 +108,34 @@ passport.use(
           facebookId: profile.id,
           displayName: profile.displayName,
           avatarUrl: ""
+        }).save();
+      }
+
+      // user object is passed to serializeUser()
+      return done(null, user);
+    }
+  )
+)
+
+passport.use(
+  new TwitterStrategy(
+    {
+      consumerKey: process.env.TWITTER_OAUTH_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_OAUTH_CONSUMER_SECRET,
+      callbackURL: process.env.TWITTER_OAUTH_CALLBACK_URL
+    },
+    async (_: string, __: string, profile: any, done: any) => {
+      let user = await User.findOne({
+        where: {
+          twitterId: profile.id,
+        },
+      });
+
+      if (!user) {
+        user = await User.create({
+          twitterId: profile.id,
+          displayName: profile.displayName,
+          avatarUrl: profile._json.profile_image_url_https || ""
         }).save();
       }
 

@@ -27,7 +27,7 @@ const login: React.FC = ({}) => {
             <button>Sign in with Facebook</button>
           </Link>
           <Link href="/auth/twitter">
-            <button disabled>Sign in with Twitter</button>
+            <button>Sign in with Twitter</button>
           </Link>
           <Link href="/auth/github">
             <button>Sign in with GitHub</button>
