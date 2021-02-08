@@ -16,7 +16,7 @@
   --color-neutral-300: #c0c0c0;
   --color-neutral-200: #dcdcdc;
   --color-neutral-100: #f1f1f1;
-  --color-white: #f1f1f1;
+  --color-white: #ffffff;
   /*
     BRAND
   */
@@ -45,10 +45,12 @@ html {
   /* Default font size is 16px so set it to 10px (62.5% of 16px) for easy calculations */
   /* (1 rem == 10px) */
   font-size: 62.5%;
+}
 
-  /* @media (max-width: 1630px) {
+@media (max-width: 1630px) {
+  html {
     font-size: 56.25%;
-  } */
+  }
 }
 
 body {
