@@ -1,21 +1,21 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 1rem;
+  margin: 0 var(--spacing-separate);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-separate);
 }
 
 .form label {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-related);
 }
 
 .title {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-related);
 }
 
 .thumbnail {
@@ -23,6 +23,6 @@
 }
 
 .submit {
-  margin-top: 2rem;
+  margin-top: var(--spacing-separate);
   margin-left: auto;
 }

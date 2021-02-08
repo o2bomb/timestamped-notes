@@ -1,18 +1,19 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -1rem;
+  margin: 0 calc(var(--spacing-separate) / 2);
+  margin-top: calc(-1 * var(--spacing-separate) / 2);
 }
 
 .container > * {
   flex-grow: 1;
   width: 40rem;
-  margin: 0 1rem;
-  margin-top: 1rem;
+  margin: 0 calc(var(--spacing-separate) / 2);
+  margin-top: calc(var(--spacing-separate) / 2);
 }
 
 .info {
-  margin: 0 1rem;
+  margin: 0 var(--spacing-separate);
   text-align: center;
 }
 

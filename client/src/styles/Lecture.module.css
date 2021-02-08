@@ -42,7 +42,7 @@
 
 .content {
   flex: 1;
-  margin-left: 1rem;
+  margin-left: var(--spacing-related);
 }
 
 .form {
@@ -60,6 +60,6 @@
 
 .container {
   display: flex;
-  height: calc(100vh - 16rem);
+  height: calc(100vh - var(--height-navbar));
   width: 100%;
 }

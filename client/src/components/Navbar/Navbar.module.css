@@ -4,7 +4,8 @@
   left: 0;
 
   display: flex;
-  padding: 2rem 1rem;
+  height: var(--height-navbar);
+  padding: 0 var(--spacing-separate);
   align-items: center;
   background-color: var(--color-white);
 }

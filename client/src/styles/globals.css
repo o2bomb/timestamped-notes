@@ -5,7 +5,7 @@
   --font-brand: "Space Mono", monospace;
   --font-primary: "Cabin", sans-serif;
   /*
-    NEUTRALS
+    NEUTRAL COLOURS
   */
   --color-black: #000000;
   --color-neutral-800: #1c1c1c;
@@ -18,9 +18,16 @@
   --color-neutral-100: #f1f1f1;
   --color-white: #ffffff;
   /*
-    BRAND
+    BRAND COLOURS
   */
   --color-primary: #0069ed;
+  /*
+    SPACING AND SIZE
+  */
+  --height-navbar: 7rem;         /* height of navbar */
+  --spacing-separate: 2rem;      /* spacing between unrelated content */
+  --spacing-related: 1rem;       /* spacing between related content */
+  --padding-default: 1rem 2rem;  /* default padding of most items */
 }
 
 /*
@@ -68,7 +75,7 @@ button {
   font-size: inherit;
   display: inline-block;
   border: none;
-  padding: 1rem 2rem;
+  padding: var(--padding-default);
   margin: 0;
   text-decoration: none;
   background: var(--color-primary);
@@ -120,7 +127,7 @@ a:focus {
   Styling text inputs only
 */
 input:not([type="submit"]):not([type="file"]) {
-  padding: 1rem 2rem;
+  padding: var(--padding-default);
   border-radius: 0;
   border: 2px solid var(--color-black);
   background-color: var(--color-white);
