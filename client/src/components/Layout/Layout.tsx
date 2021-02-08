@@ -3,18 +3,20 @@ import Head from "next/head";
 import Navbar from "../Navbar";
 
 import styles from "./Layout.module.css";
+import { NavbarProps } from "../Navbar/Navbar";
 
 type LayoutVariant = "small" | "regular" | "large";
 
-interface LayoutProps {
-  navigation?: boolean;
+interface LayoutProps extends NavbarProps {
+  showNavbar?: boolean;
   variant?: LayoutVariant;
 }
 
 const Layout: React.FC<LayoutProps> = ({
-  navigation = true,
+  showNavbar = true,
   variant = "regular",
   children,
+  ...navbarProps
 }) => {
   let maxWidth;
   switch (variant) {
@@ -47,7 +49,7 @@ const Layout: React.FC<LayoutProps> = ({
           rel="stylesheet"
         />
       </Head>
-      {!navigation ? null : <Navbar />}
+      {!showNavbar ? null : <Navbar {...navbarProps} />}
       <main
         className={styles.main}
         style={{

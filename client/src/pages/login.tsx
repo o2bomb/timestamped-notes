@@ -14,7 +14,7 @@ const login: React.FC = ({}) => {
   }
 
   return (
-    <Layout variant="small" navigation={false}>
+    <Layout variant="small" showNavbar={false}>
       <div className={styles.container}>
         <div className={styles.title}>
           Sign in to <Link href="/">timestamped_notes</Link>

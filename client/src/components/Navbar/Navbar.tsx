@@ -5,9 +5,12 @@ import { useViewport } from "../../utils/ViewportProvider";
 
 import styles from "./Navbar.module.css";
 
-interface NavbarProps {}
+export interface NavbarProps {
+  showCreateLecture?: boolean;
+  showLogin?: boolean;
+}
 
-const Navbar: React.FC<NavbarProps> = ({}) => {
+const Navbar: React.FC<NavbarProps> = ({ showCreateLecture = true }) => {
   const viewport = useViewport();
   const { data, loading, error } = useMeQuery();
   const { data: lectureData } = useGetLecturesQuery();
@@ -15,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const buttons = () => {
     return data?.me ? (
       <>
-        {(lectureData?.lectures || []).length > 0 ? (
+        {(lectureData?.lectures || []).length > 0 && showCreateLecture ? (
           <Link href="/create-lecture">
             <button>Create a lecture</button>
           </Link>

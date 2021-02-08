@@ -99,7 +99,7 @@ const CreateLecture: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout showCreateLecture={false}>
       <div className={styles.container}>
         <form
           className={styles.form}
