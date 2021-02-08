@@ -14,8 +14,8 @@ export type ViewportValues = {
 type ViewportContext = ViewportValues;
 
 const viewportContext = React.createContext<ViewportContext>({
-  height: 0,
-  width: 0
+  height: 10000,
+  width: 10000
 });
 
 /**
@@ -24,11 +24,12 @@ const viewportContext = React.createContext<ViewportContext>({
  */
 export const ViewportProvider: React.FC<ViewportProviderProps> = ({ children }) => {
   if (isServer()) {
-    return (
-      <viewportContext.Provider value={{ width: 0, height: 0 }}>
-        {children}
-      </viewportContext.Provider>
-    );
+    // return (
+    //   <viewportContext.Provider value={{ width: 0, height: 0 }}>
+    //     {children}
+    //   </viewportContext.Provider>
+    // );
+    return <>{children}</>;
   }
 
   const [width, setWidth] = React.useState(window.innerWidth);
