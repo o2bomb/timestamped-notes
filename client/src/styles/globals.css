@@ -28,6 +28,14 @@
   --spacing-separate: 2rem;      /* spacing between unrelated content */
   --spacing-related: 1rem;       /* spacing between related content */
   --padding-default: 1rem 2rem;  /* default padding of most items */
+  /*
+    Z-INDEX
+  */
+  --z-index-most-important: 1000;
+  --z-index-very-important: 900;
+  --z-index-important: 500;
+  --z-index-less-important: 400;
+  --z-index-least-important: 300;
 }
 
 /*
