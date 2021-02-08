@@ -63,3 +63,17 @@
   height: calc(100vh - var(--height-navbar));
   width: 100%;
 }
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .video {
+    min-height: 30rem;
+  }
+
+  .notesSection {
+    height: calc(100vh - var(--height-navbar) - 30rem);
+  }
+}
