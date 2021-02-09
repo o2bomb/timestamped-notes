@@ -21,7 +21,7 @@ import "./passport";
 import { YouTubeResolver } from "./resolvers/youtube";
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
@@ -29,13 +29,14 @@ const main = async () => {
     entities: [Lecture, Note, User],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
-  // await conn.runMigrations();
+  await conn.runMigrations();
 
   const app = express();
 
   // SESSION AND COOKIES
   const RedisStore = connectRedis(session);
   const redis = new Redis(process.env.REDIS_URL);
+  app.set("trust proxy", 1);
   app.use(
     session({
       name: COOKIE_NAME,
