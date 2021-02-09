@@ -57,7 +57,13 @@ Before reading ahead, complete the following steps first:
 3. `docker-compose rm && docker volume prune` to reset Docker containers to a clean slate
 
 ### Deploying the frontend
-
+Within the `client` directory:
+1. Fix all TypeScript errors
+2. [Sign up for a Vercel account](https://vercel.com/signup)
+3. `npm i -g vercel@latest` to install the Vercel npm package
+4. `vercel` to deploy your frontend
+5. [Add a custom domain to the app](https://vercel.com/docs/custom-domains)
+- `vercel --prod` for subsequent deploys (deploys to production)
 
 ### Deploying the backend
 Within the `server` directory:
@@ -122,7 +128,7 @@ server {
 - `dokku domains:report timestamped-notes-server` to check the domains for the Dokku app
 - `dokku proxy:report timestamped-notes server` to check proxies
 
-#### deploy.sh
+### deploy.sh
 `deploy.sh` can be executed to for subsequent deploys to Dokku (might need to set execution permissions with `chmod +x deploy.sh`). The following steps are executed in this script:
 1. Builds the server's Docker image and tags it
 2. Pushes the server's Docker image to [Docker Hub](https://hub.docker.com/)
