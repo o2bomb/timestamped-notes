@@ -1,0 +1,10 @@
+{
+  "type": "postgres",
+  "host": "postgres",
+  "port": 5432,
+  "username": "postgres",
+  "password": "verysecretpassword",
+  "database": "timestamped-notes",
+  "entities": ["dist/entities/*.js"],
+  "migrations": ["dist/migrations/*.js"]
+}
