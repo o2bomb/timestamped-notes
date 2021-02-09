@@ -12,11 +12,11 @@ module.exports = {
     ] : [
       {
         source: '/auth/:path',
-        destination: `https://timestamped-notes-server.felixtan.me/auth/:path`,
+        destination: 'https://timestamped-notes-server.felixtan.me/auth/:path',
       },
       {
         source: '/logout',
-        destination: `https://timestamped-notes-server.felixtan.me/logout`,        
+        destination: 'https://timestamped-notes-server.felixtan.me/logout',        
       }
     ]
   },
