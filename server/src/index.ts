@@ -85,6 +85,7 @@ const main = async () => {
 
   app.get("/logout", (req, res) => {
     req.session.destroy(function (_) {
+      res.clearCookie(COOKIE_NAME, {path: '/'});
       res.redirect("/");
     });
   });
