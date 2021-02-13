@@ -23,14 +23,14 @@ const login: React.FC = ({}) => {
           <Link href="/auth/google">
             <button>Sign in with Google</button>
           </Link>
-          <Link href="/auth/facebook">
-            <button>Sign in with Facebook</button>
-          </Link>
-          <Link href="/auth/twitter">
-            <button>Sign in with Twitter</button>
-          </Link>
           <Link href="/auth/github">
             <button>Sign in with GitHub</button>
+          </Link>
+          <Link href="/auth/facebook">
+            <button disabled>Sign in with Facebook</button>
+          </Link>
+          <Link href="/auth/twitter">
+            <button disabled>Sign in with Twitter</button>
           </Link>
         </div>
       </div>
