@@ -1,6 +1,8 @@
 # timestamped-notes
 Web app for taking notes on videos with timestamps 
 
+[Live demo](https://timestamped-notes.felixtan.me/)
+
 ## Running the project
 Installation prerequisites:
 - [Docker](https://hub.docker.com/)
