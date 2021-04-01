@@ -86,7 +86,7 @@ Preparing Dokku for deployment:
 7. `dokku postgres:link timestamped-notes-postgres timestamped-notes-server` to link the Postgres container to the Dokku app
 8. `dokku redis:link timestamped-notes-redis timestamped-notes-server` to link the Redis container to the Dokku app
 9. `dokku domains:add timestamped-notes-server timestamped-notes-server.example.com` to set a subdomain for the app (`example.com` should be replaced by your own custom domain)
-10. Set all environment variables in the app by running `dokku config:set timestamped-notes-server NODE_ENV=prod POSTGRES_PASSWORD=postgres ...`. **Do not set the DATABASE_URL and REDIS_URL environment variables**
+10. Set all environment variables in the app by running `dokku config:set timestamped-notes-server NODE_ENV=production POSTGRES_PASSWORD=postgres ...`. **Do not set the DATABASE_URL and REDIS_URL environment variables**
 - `docker container list` to check that there is a Postgres and Redis container running in the background
 
 Setting up TLS encryption:
