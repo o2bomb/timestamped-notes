@@ -54,7 +54,7 @@ The backend (server) of this application is deployed on a DigitalOcean Droplet w
 Before reading ahead, complete the following steps first:
 1. Checkout the `prod` branch
 2. Rebase on top of `master` branch (`git rebase master`)
-3. `docker-compose rm && docker volume prune` to reset Docker containers to a clean slate
+3. `docker-compose down && docker-compose rm && docker volume prune` to reset Docker containers to a clean slate
 
 ### Deploying the frontend
 Within the `client` directory:
