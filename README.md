@@ -21,9 +21,11 @@ Installation prerequisites:
 
 ### Example .env file for development environment
 ```env
+DATABASE_NAME=timestamped-notes
 POSTGRES_PASSWORD=verysecretpassword
-DATABASE_NAME=lecture-notes
+DATABASE_URL=postgresql://postgres:verysecretpassword@postgres:5432/timestamped-notes
 REDIS_URL=redis:6379
+COOKIE_DOMAIN=.felixtan.me
 CORS_ORIGIN=http://localhost:3000
 PORT=5000
 SESSION_SECRET=laksdjfpq08w439owijhdklmbsdfklqjwyhef98
@@ -32,9 +34,11 @@ GITHUB_OAUTH_CALLBACK_URL=http://localhost:5000/auth/github/callback
 ```
 |Environment variable|Description|
 |-|-|
-|`POSTGRES_PASSWORD`|Password used for accessing Postgres database|
 |`DATABASE_NAME`|Name of database to be created in Postgres|
-|`REDIS_URL`|Redis endpoint URL|
+|`POSTGRES_PASSWORD`|Password used for accessing Postgres database|
+|`DATABASE_URL`|Postgres connection URL|
+|`REDIS_URL`|Redis connection URL|
+|`COOKIE_DOMAIN`|The base domain that cookies will work on. Must be set if using subdomains in production|
 |`CORS_ORIGIN`|CORS origin (client URL)|
 |`PORT`|Port that the Express server uses/exposes|
 |`SESSION_SECRET`|Used for encrypting session data. Put a long, hard to crack string here|

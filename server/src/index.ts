@@ -23,9 +23,9 @@ import { YouTubeResolver } from "./resolvers/youtube";
 const main = async () => {
   await createConnection({
     type: "postgres",
-    url: `postgresql://postgres:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.DATABASE_NAME}`,
+    url: process.env.DATABASE_URL,
     logging: true,
-    synchronize: true, // makes sure entities are synced with database. dont use in prod
+    synchronize: !__prod__, // makes sure entities are synced with database. dont use in prod
     entities: [Lecture, Note, User],
     migrations: [path.join(__dirname, "./migrations/*")],
   });
